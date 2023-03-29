@@ -13,12 +13,20 @@ class requesterHelperDetails extends StatefulWidget {
 }
 
 class _requesterHelperDetailsState extends State<requesterHelperDetails> {
-  //Bring the name and phonenumber from firebase and store it in a variable
+  bool hasRiderMatched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 4), () {
+      setState(() {
+        hasRiderMatched = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var hasRiderMatched = false;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -42,52 +50,70 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                 ),
                 SizedBox(
                   height: 100,
-                  width: 120,
+                  width: 200,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      AnimatedTextKit(
-                        repeatForever: true,
-                        animatedTexts: [
-                          RotateAnimatedText(
-                            'HELPER',
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
+                      (hasRiderMatched)
+                          ? Text(
+                              "RIDE",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40.0,
+                              ),
+                            )
+                          : AnimatedTextKit(
+                              repeatForever: true,
+                              animatedTexts: [
+                                RotateAnimatedText(
+                                  'HELPER',
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.0,
+                                  ),
+                                ),
+                                RotateAnimatedText(
+                                  'RIDER',
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.0,
+                                  ),
+                                ),
+                                RotateAnimatedText(
+                                  'DRIVER',
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30.0,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          RotateAnimatedText(
-                            'RIDER',
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
-                            ),
-                          ),
-                          RotateAnimatedText(
-                            'DRIVER',
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
               ],
             ),
-            Text(
-              "is On the Way",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 40.0,
-              ),
-            ),
+            (hasRiderMatched)
+                ? Text(
+                    "has Arrived",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40.0,
+                    ),
+                  )
+                : Text(
+                    "is On the Way",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40.0,
+                    ),
+                  ),
           ],
         ),
       ),
