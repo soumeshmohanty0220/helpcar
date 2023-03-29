@@ -2,17 +2,18 @@
 
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:helpcar/AllWidgets/progressdialog.dart';
-import 'package:helpcar/AllWidgets/requesterRideDetails.dart';
-import 'package:helpcar/Assistants/assistantmethods.dart';
-import 'package:helpcar/DataHandler/appData.dart';
-import 'package:helpcar/HelperScreens/homepage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../AllWidgets/progressdialog.dart';
+import '../AllWidgets/requesterRideDetails.dart';
+import '../Assistants/assistantmethods.dart';
+import '../DataHandler/appData.dart';
+import '../HelperScreens/homepage.dart';
 import '../searchScreen.dart';
 
 class HomeScreen extends StatefulWidget {

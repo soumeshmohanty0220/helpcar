@@ -1,13 +1,12 @@
-// ignore_for_file: sized_box_for_whitespace, must_be_immutable, use_build_context_synchronously, prefer_const_constructors, duplicate_ignore
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:helpcar/AllWidgets/progressdialog.dart';
-import 'package:helpcar/Allscreens/homescreen.dart';
 import 'package:helpcar/Allscreens/registrationscreen.dart';
-import 'package:helpcar/main.dart';
+
+import '../main.dart';
+import 'homescreen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -157,7 +156,6 @@ class LoginScreen extends StatelessWidget {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          
           return ProgressDialog(message: "Authenticating");
         });
 
@@ -167,7 +165,7 @@ class LoginScreen extends StatelessWidget {
                 password: passwordTextEditingController.text)
             // ignore: body_might_complete_normally_catch_error
             .catchError((errMsg) {
-              Navigator.pop(context);
+      Navigator.pop(context);
       displayToastMessage("Error: $errMsg", context);
     }))
         .user;

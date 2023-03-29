@@ -1,24 +1,21 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, duplicate_ignore, must_be_immutable, use_build_context_synchronously, prefer_interpolation_to_compose_strings
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:helpcar/AllWidgets/progressdialog.dart';
-import 'package:helpcar/Allscreens/homescreen.dart';
-import 'package:helpcar/Allscreens/login_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:helpcar/main.dart';
+
+import '../AllWidgets/progressdialog.dart';
+import '../main.dart';
+import 'homescreen.dart';
+import 'login_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
   RegistrationScreen({Key? key}) : super(key: key);
 
-  
   static const String idScreen = "register";
 
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController =
-      TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -153,23 +150,18 @@ class RegistrationScreen extends StatelessWidget {
                         minimumSize: Size(double.infinity, 50.0),
                       ),
                       onPressed: () {
-                        if (nameTextEditingController.text.length < 3) 
-                        {
+                        if (nameTextEditingController.text.length < 3) {
                           displayToastMessage(
                               "Name must be atleast 4 characters", context);
-                        }
-                        else if (!emailTextEditingController.text.contains("@"))
-                        {
+                        } else if (!emailTextEditingController.text
+                            .contains("@")) {
                           displayToastMessage(
                               "Email address is not valid", context);
-                        }
-                        else if (passwordTextEditingController.text.length < 6)
-                        {
+                        } else if (passwordTextEditingController.text.length <
+                            6) {
                           displayToastMessage(
                               "Password must be atleast 6 characters", context);
-                        }
-                        else
-                        {
+                        } else {
                           registerNewUser(context);
                         }
                       },
@@ -209,22 +201,23 @@ class RegistrationScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   void registerNewUser(BuildContext context) async {
-
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          
           return ProgressDialog(message: "Registering, Please wait...");
         });
 
-    final User? firebaseUser =
-        (await _firebaseAuth.createUserWithEmailAndPassword(
+    final User? firebaseUser = (await _firebaseAuth
+            .createUserWithEmailAndPassword(
                 email: emailTextEditingController.text,
                 // ignore: body_might_complete_normally_catch_error
-                password: passwordTextEditingController.text).catchError((errMsg) {
-                  Navigator.pop(context);
-                  displayToastMessage("Error:$errMsg", context);})).user;
+                password: passwordTextEditingController.text)
+            .catchError((errMsg) {
+      Navigator.pop(context);
+      displayToastMessage("Error:$errMsg", context);
+    }))
+        .user;
 
     if (firebaseUser != null) //user created
     {
@@ -234,19 +227,17 @@ class RegistrationScreen extends StatelessWidget {
         "phone": phoneTextEditingController.text.trim(),
       };
       userRef.child(firebaseUser.uid).set(userDataMap);
-      displayToastMessage("Congratulations, your account has been created", context);
-      Navigator.pushNamedAndRemoveUntil(context, HomeScreen.idScreen, (route) => false);
-    } 
-    
-    else 
-    {
+      displayToastMessage(
+          "Congratulations, your account has been created", context);
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.idScreen, (route) => false);
+    } else {
       Navigator.pop(context);
       displayToastMessage("New user account has not been created", context);
     }
-    
   }
-  displayToastMessage(String message, BuildContext context) 
-  {
-      Fluttertoast.showToast(msg: message);
+
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
   }
 }
