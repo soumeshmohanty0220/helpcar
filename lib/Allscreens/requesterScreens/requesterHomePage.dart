@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, camel_case_types
 
 import 'dart:async';
 
@@ -243,8 +243,8 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     bottom: 0.0,
                     child: (currentPageState == 2)
                         ? requestRideDetails(
-                            loc1: "Gothapatna",
-                            loc2: "Nuagaon",
+                            loc1: "BBSR",
+                            loc2: "RKL",
                           )
                         : Container(
                             height: 250.0,
