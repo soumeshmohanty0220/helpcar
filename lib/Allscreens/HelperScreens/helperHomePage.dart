@@ -28,26 +28,31 @@ class _helperHomePageState extends State<helperHomePage> {
         backgroundColor: Color.fromARGB(255, 255, 162, 103),
         toolbarHeight: 300,
         title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              "Hey Helper!",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontSize: 20.0,
-              ),
-            ),
-            Text(
-              "Add Your Way",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Hey Helper",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20.0,
+                  ),
+                ),
+                Text(
+                  "Add Your Way",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40.0,
+                  ),
+                ),
+              ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildButton("Current Path", 0),
                 _buildButton("Previous Paths", 1),
@@ -118,7 +123,7 @@ class _helperHomePageState extends State<helperHomePage> {
         child: Text(
           label,
           style: TextStyle(
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontWeight: isSelected ? FontWeight.w800 : FontWeight.normal,
             fontSize: 18,
             color: Colors.black,
           ),

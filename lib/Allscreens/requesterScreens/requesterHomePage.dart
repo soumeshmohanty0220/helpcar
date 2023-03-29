@@ -189,8 +189,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   markers: markersSet,
                   circles: circlesSet,
                 ),
-
-                //Drawer Button
                 Positioned(
                   top: 0.0,
                   left: 0.0,

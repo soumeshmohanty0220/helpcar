@@ -112,6 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: TextField(
+                              autofocus: true,
                               onChanged: (val) {
                                 findPlace(val);
                               },
