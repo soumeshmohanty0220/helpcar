@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, camel_case_types
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, camel_case_types, unused_local_variable
 
 import 'dart:async';
 
@@ -13,6 +13,7 @@ import '../../AllWidgets/progressdialog.dart';
 import '../../AllWidgets/requesterRideDetails.dart';
 import '../../Assistants/assistantmethods.dart';
 import '../../DataHandler/appData.dart';
+import '../../Models/address.dart';
 import '../../searchScreen.dart';
 import '../HelperScreens/helperHomePage.dart';
 
@@ -98,6 +99,9 @@ class _requesterHomePageState extends State<requesterHomePage> {
 
   @override
   Widget build(BuildContext context) {
+     AppData appData = AppData();
+    Address? userPickUpLocation = appData.userPickUpLocation;
+    Address? dropOfflocation = appData.dropOfflocation;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -159,7 +163,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => helperHomePage()));
+                          builder: (context) => HelperHomePage()));
                 },
                 child: ListTile(
                   leading: Icon(Icons.car_rental, color: Colors.blue),
@@ -235,147 +239,144 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     ),
                   ),
                 ),
-                Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: 0.0,
-                    child: (currentPageState == 2)
-                        ? requestRideDetails(
-                            loc1: "BBSR",
-                            loc2: "RKL",
-                          )
-                        : Container(
-                            height: 250.0,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 241, 228, 199),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15.0),
-                                topRight: Radius.circular(15.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 16.0,
-                                  spreadRadius: 0.5,
-                                  offset: const Offset(0.7, 0.7),
+                ChangeNotifierProvider(
+                  create: (context) => AppData(),
+                  child: Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      bottom: 0.0,
+                      child: (currentPageState == 2)
+                          ?requestRideDetails(
+                              loc1: userPickUpLocation?.placeName ?? '',
+                              loc2: dropOfflocation?.placeName ?? '',
+                            )
+
+                          : Container(
+                              height: 250.0,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 241, 228, 199),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0),
+                                  topRight: Radius.circular(15.0),
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 24.0, vertical: 18.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      "Hi there",
-                                      style: TextStyle(
-                                        fontSize: 20.0,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    blurRadius: 16.0,
+                                    spreadRadius: 0.5,
+                                    offset: const Offset(0.7, 0.7),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0, vertical: 18.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        "Hi there",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "Need Help?",
-                                      style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontFamily: "Brand Bold"),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        var res = await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SearchScreen()));
-                                        if (res == "obtainDirection") {
-                                          await getPlaceDirection();
-                                        }
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 4.0,
-                                                spreadRadius: 0.5,
-                                                offset: const Offset(0.7, 0.7),
-                                              ),
-                                            ]),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(12.0),
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.search,
-                                                color: Colors.blueAccent,
-                                              ),
-                                              SizedBox(
-                                                width: 10.0,
-                                              ),
-                                              Text("Search Destination"),
-                                            ],
+                                      Text(
+                                        "Need Help?",
+                                        style: TextStyle(
+                                            fontSize: 15.0,
+                                            fontFamily: "Brand Bold"),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          var res = await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SearchScreen()));
+                                          if (res == "obtainDirection") {
+                                            await getPlaceDirection();
+                                          }
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 4.0,
+                                                  spreadRadius: 0.5,
+                                                  offset: const Offset(0.7, 0.7),
+                                                ),
+                                              ]),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(12.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.search,
+                                                  color: Colors.blueAccent,
+                                                ),
+                                                SizedBox(
+                                                  width: 10.0,
+                                                ),
+                                                Text("Search Destination"),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 22.0,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                        ),
-                                        SizedBox(
-                                          width: 12.0,
-                                        ),
-                                        Builder(builder: (context) {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                width: 265,
-                                                child: Text(
-                                                  //_currentAddress,
-                                                  Provider.of<AppData>(context)
-                                                              .userPickUpLocation !=
-                                                          null
-                                                      ? Provider.of<AppData>(
-                                                              context)
-                                                          .userPickUpLocation!
-                                                          .placeName
-                                                      : "Your Location",
-                                                  textAlign: TextAlign
-                                                      .left, // Set text alignment
-                                                  softWrap: true,
-                                                  maxLines: 2,
+                                      SizedBox(
+                                        height: 22.0,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                          ),
+                                          SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Builder(builder: (context) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 265,
+                                                  child: Text(
+                                                    //_currentAddress,
+                                                    Provider.of<AppData>(context).userPickUpLocation !=null? Provider.of<AppData>(context).userPickUpLocation!.placeName: "Your Location",
+                                                    textAlign: TextAlign
+                                                        .left, // Set text alignment
+                                                    softWrap: true,
+                                                    maxLines: 2,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: 3.0,
-                                              ),
-                                              Text(
-                                                "Your Current Location",
-                                                style: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 12.0),
-                                              ),
-                                            ],
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                          )),
+                                                SizedBox(
+                                                  height: 3.0,
+                                                ),
+                                                Text(
+                                                  "Your Current Location",
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 12.0),
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                            )),
+                ),
               ],
             ),
     );
@@ -401,6 +402,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
       print("Distance: ${details.distanceText}");
       print("Duration: ${details.durationText}");
     }
+
     Navigator.pop(context);
     print("This is Encoded Points :: ");
     print(details!.encodedPoints);

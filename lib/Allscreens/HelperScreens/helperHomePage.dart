@@ -1,22 +1,19 @@
-// ignore_for_file: prefer_const_constructors, camel_case_types
+// ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_literals_to_create_immutables, unused_import, library_private_types_in_public_api
 
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:helpcar/Allscreens/HelperScreens/helperCurrentPath.dart';
-
+import 'package:helpcar/Allscreens/HelperScreens/helpersearchscreen.dart';
 import 'helperPreviousPath.dart';
 
-class helperHomePage extends StatefulWidget {
-  const helperHomePage({super.key});
+class HelperHomePage extends StatefulWidget {
+  const HelperHomePage({Key? key}) : super(key: key);
 
   @override
-  State<helperHomePage> createState() => _helperHomePageState();
+  _HelperHomePageState createState() => _HelperHomePageState();
 }
 
-class _helperHomePageState extends State<helperHomePage> {
+class _HelperHomePageState extends State<HelperHomePage> {
   int _selectedButtonIndex = 0;
 
   @override
@@ -25,28 +22,28 @@ class _helperHomePageState extends State<helperHomePage> {
       appBar: AppBar(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         shadowColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 255, 162, 103),
+        backgroundColor: const Color.fromARGB(255, 255, 162, 103),
         toolbarHeight: 300,
         title: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Hey Helper",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
-                    fontSize: 20.0,
+                    fontSize: 40.0,
                   ),
                 ),
                 Text(
                   "Add Your Way",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 40.0,
+                    fontSize: 20.0,
                   ),
                 ),
               ],
@@ -62,45 +59,45 @@ class _helperHomePageState extends State<helperHomePage> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildBody(_selectedButtonIndex),
-              // Text(
-              //   "No Current Active Path",
-              //   style: TextStyle(
-              //     fontSize: 15,
-              //   ),
-              // ),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    backgroundColor: Color.fromARGB(255, 247, 90, 0),
-                  ),
-                  child: Text(
-                    "Add Path",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Colors.black),
-                  ),
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(child: _buildBody(_selectedButtonIndex)),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CurrentPathPage(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: const Color.fromARGB(255, 247, 90, 0),
+                ),
+                child: const Text(
+                  "Add Path",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.black),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
+
 
   Widget _buildButton(String label, int index) {
     final isSelected = _selectedButtonIndex == index;
@@ -143,21 +140,6 @@ class _helperHomePageState extends State<helperHomePage> {
       // );
       return helperCurrentPath();
     } else {
-      // return Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Text(
-      //       "No History",
-      //       style: TextStyle(
-      //         fontSize: 20,
-      //       ),
-      //     ),
-      //     Icon(
-      //       Icons.history,
-      //       size: 40,
-      //     ),
-      //   ],
-      // );
       return helperPreviousPath();
     }
   }
