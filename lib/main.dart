@@ -3,15 +3,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:helpcar/Allscreens/homescreen.dart';
 import 'package:helpcar/Allscreens/login_screen.dart';
-import 'package:helpcar/Allscreens/registrationscreen.dart';
 import 'package:helpcar/DataHandler/appData.dart';
-import 'package:helpcar/RequestScreens/requesterDestination.dart';
 import 'package:provider/provider.dart';
 
+import 'Allscreens/homescreen.dart';
+import 'Allscreens/registrationscreen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -25,22 +24,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create:(context) => AppData(),
+      create: (context) => AppData(),
       child: MaterialApp(
-          title: 'HelpCAR',
-          theme: ThemeData(
-            fontFamily: "Brand Bold",
-            primarySwatch: Colors.orange,
-          ),
-          initialRoute: LoginScreen.idScreen,
-          routes: {
-            RegistrationScreen.idScreen: (context) => RegistrationScreen(),
-            LoginScreen.idScreen: (context) => LoginScreen(),
-            HomeScreen.idScreen: (context) => HomeScreen(), 
-          },
-          debugShowCheckedModeBanner: false,
+        title: 'HelpCAR',
+        theme: ThemeData(
+          fontFamily: "Brand Bold",
+          primarySwatch: Colors.orange,
         ),
+        initialRoute: LoginScreen.idScreen,
+        routes: {
+          RegistrationScreen.idScreen: (context) => RegistrationScreen(),
+          LoginScreen.idScreen: (context) => LoginScreen(),
+          HomeScreen.idScreen: (context) => HomeScreen(),
+        },
+        debugShowCheckedModeBanner: false,
+      ),
     );
-    }
   }
-
+}
