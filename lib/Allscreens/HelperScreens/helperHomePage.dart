@@ -49,13 +49,6 @@ class _HelperHomePageState extends State<HelperHomePage> {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildButton("Current Path", 0),
-                _buildButton("Previous Paths", 1),
-              ],
-            ),
           ],
         ),
       ),
@@ -65,7 +58,10 @@ class _HelperHomePageState extends State<HelperHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child: _buildBody(_selectedButtonIndex)),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: helperCurrentPath(),
+            ),
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -97,51 +93,5 @@ class _HelperHomePageState extends State<HelperHomePage> {
         ),
       ),
     );
-  }
-
-
-  Widget _buildButton(String label, int index) {
-    final isSelected = _selectedButtonIndex == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedButtonIndex = index;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          // border: Border.all(
-          //   color: isSelected ? Colors.white : Colors.transparent,
-          //   width: 2,
-          // ),
-          borderRadius: BorderRadius.circular(2),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontWeight: isSelected ? FontWeight.w800 : FontWeight.normal,
-            fontSize: 18,
-            color: Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBody(int index) {
-    final isSelected = _selectedButtonIndex == 0;
-    if (isSelected) {
-      // return Text(
-      //   "No Current Active Path",
-      //   style: TextStyle(
-      //     fontSize: 15,
-      //   ),
-      // );
-      return helperCurrentPath();
-    } else {
-      return helperPreviousPath();
-    }
   }
 }

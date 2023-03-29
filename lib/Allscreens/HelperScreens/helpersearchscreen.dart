@@ -60,52 +60,119 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: _locationController,
-                decoration: const InputDecoration(labelText: 'Location'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter location';
-                  }
-                  return null;
-                },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _locationController,
+                    decoration: InputDecoration(
+                      labelText: 'Location',
+                      labelStyle: TextStyle(
+                        color: Colors.grey[600],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter location';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _destinationController,
+                    decoration: InputDecoration(
+                      labelText: 'Destination',
+                      labelStyle: TextStyle(
+                        color: Colors.grey[600],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter destination';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _timeController,
+                    decoration: InputDecoration(
+                      labelText: 'Time',
+                      labelStyle: TextStyle(
+                        color: Colors.grey[600],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey[300]!),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter time';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
               ),
-              TextFormField(
-                controller: _destinationController,
-                decoration:
-                    const InputDecoration(labelText: 'Destination'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter destination';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _timeController,
-                decoration: const InputDecoration(labelText: 'Time'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter time';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16.0),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _saveCurrentPath,
-                  child: const Text('Save'),
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 50.0,
+              child: ElevatedButton(
+                onPressed: _saveCurrentPath,
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  primary: Theme.of(context).primaryColor,
+                ),
+                child: Text(
+                  'Save',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
