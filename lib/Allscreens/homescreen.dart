@@ -7,6 +7,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:helpcar/AllWidgets/progressdialog.dart';
+import 'package:helpcar/AllWidgets/requesterRideDetails.dart';
 import 'package:helpcar/Assistants/assistantmethods.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:helpcar/HelperScreens/homepage.dart';
@@ -24,14 +25,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static var currentPageState = 1;
+
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<LatLng>pLineCoordinates = [];
-  Set<Polyline>polylineSet={};
+  List<LatLng> pLineCoordinates = [];
+  Set<Polyline> polylineSet = {};
 
-  Set<Marker>markersSet={};
-  Set<Circle>circlesSet={};
-
+  Set<Marker> markersSet = {};
+  Set<Circle> circlesSet = {};
 
   // ignore: prefer_final_fields, unused_field
   Completer<GoogleMapController> _controller = Completer();
@@ -138,25 +140,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 12.0,
               ),
               ListTile(
-                leading: Icon(Icons.person,color: Colors.blue),
+                leading: Icon(Icons.person, color: Colors.blue),
                 title: Text(
                   "Visit Profile",
                   style: TextStyle(fontSize: 15.0),
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.history,color: Colors.blue),
+                leading: Icon(Icons.history, color: Colors.blue),
                 title: Text(
                   "History",
                   style: TextStyle(fontSize: 15.0),
                 ),
               ),
               GestureDetector(
-                onTap:() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => helperHomePage()));
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => helperHomePage()));
                 },
                 child: ListTile(
-                  leading: Icon(Icons.car_rental,color: Colors.blue),
+                  leading: Icon(Icons.car_rental, color: Colors.blue),
                   title: Text(
                     "Provide Help",
                     style: TextStyle(fontSize: 15.0),
@@ -182,7 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   polylines: polylineSet,
                   markers: markersSet,
                   circles: circlesSet,
-
                 ),
 
                 //Drawer Button
@@ -236,222 +240,254 @@ class _HomeScreenState extends State<HomeScreen> {
                     left: 0.0,
                     right: 0.0,
                     bottom: 0.0,
-                    child: Container(
-                      height:250.0,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 241, 228, 199),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 16.0,
-                            spreadRadius: 0.5,
-                            offset: const Offset(0.7, 0.7),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0, vertical: 18.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height:10.0),
-                              Text(
-                                "Hi there",
-                                style: TextStyle(fontSize: 15.0),
+                    child: (currentPageState == 2)
+                        ? requestRideDetails(
+                            loc1: "Gothapatna",
+                            loc2: "Nuagaon",
+                          )
+                        : Container(
+                            height: 250.0,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 241, 228, 199),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15.0),
+                                topRight: Radius.circular(15.0),
                               ),
-                              Text(
-                                "Need Help?",
-                                style: TextStyle(
-                                    fontSize: 15.0, fontFamily: "Brand Bold"),
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              GestureDetector(
-                                onTap: () async{
-                                  var res = await Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
-                                  if(res == "obtainDirection"){
-                                    await getPlaceDirection();
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black,
-                                          blurRadius: 4.0,
-                                          spreadRadius: 0.5,
-                                          offset: const Offset(0.7, 0.7),
-                                        ),
-                                      ]),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.search,
-                                          color: Colors.blueAccent,
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        Text("Search Destination"),
-                                      ],
-                                    ),
-                                  ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  blurRadius: 16.0,
+                                  spreadRadius: 0.5,
+                                  offset: const Offset(0.7, 0.7),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 22.0,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 12.0,
-                                  ),
-                                  Builder(builder: (context) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 265,
-                                          child: Text(
-                                            //_currentAddress,
-                                            Provider.of<AppData>(context).userPickUpLocation!=null?Provider.of<AppData>(context).userPickUpLocation!.placeName:"Your Location",
-                                            textAlign: TextAlign
-                                                .left, // Set text alignment
-                                            softWrap: true,
-                                            maxLines: 2,
+                              ],
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 18.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 10.0),
+                                    Text(
+                                      "Hi there",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Need Help?",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontFamily: "Brand Bold"),
+                                    ),
+                                    SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        var res = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SearchScreen()));
+                                        if (res == "obtainDirection") {
+                                          await getPlaceDirection();
+                                        }
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black,
+                                                blurRadius: 4.0,
+                                                spreadRadius: 0.5,
+                                                offset: const Offset(0.7, 0.7),
+                                              ),
+                                            ]),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(12.0),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.search,
+                                                color: Colors.blueAccent,
+                                              ),
+                                              SizedBox(
+                                                width: 10.0,
+                                              ),
+                                              Text("Search Destination"),
+                                            ],
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 22.0,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          color: Colors.red,
+                                        ),
                                         SizedBox(
-                                          height: 3.0,
+                                          width: 12.0,
                                         ),
-                                        Text(
-                                          "Your Current Location",
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 12.0),
-                                        ),
+                                        Builder(builder: (context) {
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 265,
+                                                child: Text(
+                                                  //_currentAddress,
+                                                  Provider.of<AppData>(context)
+                                                              .userPickUpLocation !=
+                                                          null
+                                                      ? Provider.of<AppData>(
+                                                              context)
+                                                          .userPickUpLocation!
+                                                          .placeName
+                                                      : "Your Location",
+                                                  textAlign: TextAlign
+                                                      .left, // Set text alignment
+                                                  softWrap: true,
+                                                  maxLines: 2,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 3.0,
+                                              ),
+                                              Text(
+                                                "Your Current Location",
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 12.0),
+                                              ),
+                                            ],
+                                          );
+                                        }),
                                       ],
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ],
+                                    ),
+                                  ],
+                                )),
                           )),
-                    ))
               ],
             ),
     );
   }
-  Future<void> getPlaceDirection()async{
-    var initialPos = Provider.of<AppData>(context,listen: false).userPickUpLocation;
-    var finalPos = Provider.of<AppData>(context,listen: false).dropOfflocation;
+
+  Future<void> getPlaceDirection() async {
+    currentPageState = 2;
+    var initialPos =
+        Provider.of<AppData>(context, listen: false).userPickUpLocation;
+    var finalPos = Provider.of<AppData>(context, listen: false).dropOfflocation;
     var pickUpLatLng = LatLng(initialPos!.latitude, initialPos.longitude);
     var dropOffLatLng = LatLng(finalPos!.latitude, finalPos.longitude);
 
     showDialog(
         context: context,
-        builder: (BuildContext context) => ProgressDialog(message: "Please wait...",)
-    );
+        builder: (BuildContext context) => ProgressDialog(
+              message: "Please wait...",
+            ));
 
-    var details = await AssistantMethods.obtainPlaceDirectionDetails(pickUpLatLng, dropOffLatLng);
-    if(details != null){
-        print("Distance: ${details.distanceText}");
-        print("Duration: ${details.durationText}");
-
+    var details = await AssistantMethods.obtainPlaceDirectionDetails(
+        pickUpLatLng, dropOffLatLng);
+    if (details != null) {
+      print("Distance: ${details.distanceText}");
+      print("Duration: ${details.durationText}");
     }
     Navigator.pop(context);
     print("This is Encoded Points :: ");
     print(details!.encodedPoints);
-  PolylinePoints polylinePoints = PolylinePoints();
-  List<PointLatLng> decodedPolyLinePointsResult = polylinePoints.decodePolyline(details.encodedPoints);
-  pLineCoordinates.clear();
-  if(decodedPolyLinePointsResult.isNotEmpty){
-    decodedPolyLinePointsResult.forEach((PointLatLng pointLatLng) { 
-      pLineCoordinates.add(LatLng(pointLatLng.latitude,pointLatLng.longitude));}
-  );
-  }
-  polylineSet.clear();
-  setState(() {
-    Polyline polyline=Polyline(
-    color: Colors.red,
-    polylineId: PolylineId("PolylineID"),
-    jointType: JointType.round,
-    points: pLineCoordinates,
-    width: 5,
-    startCap: Cap.roundCap,
-    endCap: Cap.roundCap,
-    geodesic: true,
-  );
-  polylineSet.add(polyline);
-  });
-  LatLngBounds latLngBounds;
-  if(pickUpLatLng.latitude>dropOffLatLng.latitude && pickUpLatLng.longitude>dropOffLatLng.longitude){
-    latLngBounds=LatLngBounds(southwest: dropOffLatLng,northeast: pickUpLatLng);
-  }
-  else if(pickUpLatLng.longitude>dropOffLatLng.longitude){
-    latLngBounds=LatLngBounds(southwest: LatLng(pickUpLatLng.latitude,dropOffLatLng.longitude),northeast: LatLng(dropOffLatLng.latitude,pickUpLatLng.longitude));
-  }
-  else if(pickUpLatLng.latitude>dropOffLatLng.latitude){
-    latLngBounds=LatLngBounds(southwest: LatLng(dropOffLatLng.latitude,pickUpLatLng.longitude),northeast: LatLng(pickUpLatLng.latitude,dropOffLatLng.longitude));
-  }
-  else{
-    latLngBounds=LatLngBounds(southwest: pickUpLatLng,northeast: dropOffLatLng);
-  }
-  final GoogleMapController mapController = await _controller.future;
-  mapController.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds,30));
-  Marker pickUpMarker=Marker(
-    markerId: MarkerId("pickUpId"),
-    position: pickUpLatLng,
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-    infoWindow: InfoWindow(title: initialPos.placeName,snippet: "My Location"),
-  );
+    PolylinePoints polylinePoints = PolylinePoints();
+    List<PointLatLng> decodedPolyLinePointsResult =
+        polylinePoints.decodePolyline(details.encodedPoints);
+    pLineCoordinates.clear();
+    if (decodedPolyLinePointsResult.isNotEmpty) {
+      decodedPolyLinePointsResult.forEach((PointLatLng pointLatLng) {
+        pLineCoordinates
+            .add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
+      });
+    }
+    polylineSet.clear();
+    setState(() {
+      Polyline polyline = Polyline(
+        color: Colors.red,
+        polylineId: PolylineId("PolylineID"),
+        jointType: JointType.round,
+        points: pLineCoordinates,
+        width: 5,
+        startCap: Cap.roundCap,
+        endCap: Cap.roundCap,
+        geodesic: true,
+      );
+      polylineSet.add(polyline);
+    });
+    LatLngBounds latLngBounds;
+    if (pickUpLatLng.latitude > dropOffLatLng.latitude &&
+        pickUpLatLng.longitude > dropOffLatLng.longitude) {
+      latLngBounds =
+          LatLngBounds(southwest: dropOffLatLng, northeast: pickUpLatLng);
+    } else if (pickUpLatLng.longitude > dropOffLatLng.longitude) {
+      latLngBounds = LatLngBounds(
+          southwest: LatLng(pickUpLatLng.latitude, dropOffLatLng.longitude),
+          northeast: LatLng(dropOffLatLng.latitude, pickUpLatLng.longitude));
+    } else if (pickUpLatLng.latitude > dropOffLatLng.latitude) {
+      latLngBounds = LatLngBounds(
+          southwest: LatLng(dropOffLatLng.latitude, pickUpLatLng.longitude),
+          northeast: LatLng(pickUpLatLng.latitude, dropOffLatLng.longitude));
+    } else {
+      latLngBounds =
+          LatLngBounds(southwest: pickUpLatLng, northeast: dropOffLatLng);
+    }
+    final GoogleMapController mapController = await _controller.future;
+    mapController.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds, 30));
+    Marker pickUpMarker = Marker(
+      markerId: MarkerId("pickUpId"),
+      position: pickUpLatLng,
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+      infoWindow:
+          InfoWindow(title: initialPos.placeName, snippet: "My Location"),
+    );
 
-  Marker dropOffMarker=Marker(
-    markerId: MarkerId("dropOffId"),
-    position: dropOffLatLng,
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    infoWindow: InfoWindow(title: finalPos.placeName,snippet: "Drop Off Location"),
-  );
-  setState(() {
-    markersSet.add(pickUpMarker);
-    markersSet.add(dropOffMarker);
-  });
-  Circle pickUpCircle=Circle(
-    fillColor: Colors.blueAccent,
-    center: pickUpLatLng,
-    radius: 12,
-    strokeWidth: 4,
-    strokeColor: Colors.blueAccent,
-    circleId: CircleId("pickUpId"),
-  );
-  
-  Circle dropOffCircle=Circle(
-    fillColor: Colors.deepPurple,
-    center: dropOffLatLng,
-    radius: 12,
-    strokeWidth: 4,
-    strokeColor: Colors.deepPurple,
-    circleId: CircleId("dropOffId"),
-  );
+    Marker dropOffMarker = Marker(
+      markerId: MarkerId("dropOffId"),
+      position: dropOffLatLng,
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+      infoWindow:
+          InfoWindow(title: finalPos.placeName, snippet: "Drop Off Location"),
+    );
+    setState(() {
+      markersSet.add(pickUpMarker);
+      markersSet.add(dropOffMarker);
+    });
+    Circle pickUpCircle = Circle(
+      fillColor: Colors.blueAccent,
+      center: pickUpLatLng,
+      radius: 12,
+      strokeWidth: 4,
+      strokeColor: Colors.blueAccent,
+      circleId: CircleId("pickUpId"),
+    );
 
-  setState(() {
-    circlesSet.add(pickUpCircle);
-    circlesSet.add(dropOffCircle);
-  });
-}
+    Circle dropOffCircle = Circle(
+      fillColor: Colors.deepPurple,
+      center: dropOffLatLng,
+      radius: 12,
+      strokeWidth: 4,
+      strokeColor: Colors.deepPurple,
+      circleId: CircleId("dropOffId"),
+    );
+
+    setState(() {
+      circlesSet.add(pickUpCircle);
+      circlesSet.add(dropOffCircle);
+    });
+  }
 }

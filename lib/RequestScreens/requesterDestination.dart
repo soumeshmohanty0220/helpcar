@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class RequesterDestinationScreen extends StatelessWidget {
   final _focusNode = FocusNode();
 
-static const String idScreen = "requestdestination";
+  static const String idScreen = "requestdestination";
 
   @override
   Widget build(BuildContext context) {

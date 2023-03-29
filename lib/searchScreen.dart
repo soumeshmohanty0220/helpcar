@@ -8,9 +8,8 @@ import 'package:helpcar/Models/address.dart';
 import 'package:helpcar/Models/placepredictions.dart';
 import 'package:helpcar/configmaps.dart';
 import 'package:provider/provider.dart';
-import 'package:helpcar/Assistants/requestAssistant.dart';
 
-
+import 'Assistants/requestassistant.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -187,6 +186,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 }
+
 class PredictionTile extends StatelessWidget {
   final PlacePredictions? placePredictions;
   PredictionTile({Key? key, this.placePredictions}) : super(key: key);
@@ -201,8 +201,7 @@ class PredictionTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(0.0),
         ),
       ),
-      onPressed:()
-      {
+      onPressed: () {
         getPlaceAddressDetails(placePredictions!.place_id, context);
       },
       child: Container(
@@ -244,30 +243,39 @@ class PredictionTile extends StatelessWidget {
     );
   }
 
-    void getPlaceAddressDetails(String placeId,context)async
-    { 
-      showDialog(context: context, builder: (BuildContext context) => ProgressDialog(message: "Please wait...",));
-      // ignore: unused_local_variable
-      String placeAddress="";
-      String placeDetailsUrl = "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey"; 
-      var res = await RequestAssistant.getRequest(placeDetailsUrl);
-      Navigator.pop(context);
+  void getPlaceAddressDetails(String placeId, context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => ProgressDialog(
+              message: "Please wait...",
+            ));
+    // ignore: unused_local_variable
+    String placeAddress = "";
+    String placeDetailsUrl =
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
+    var res = await RequestAssistant.getRequest(placeDetailsUrl);
+    Navigator.pop(context);
 
-      if(res == "failed")
-      {
-        return;
-      }
-      if(res["status"] == "OK")
-      {
-        Address address=Address(placeFormattedAddress: placeAddress,placeName: placeAddress,placeId: "123456789",latitude:0.0,longitude:0.0,);
-        address.latitude = res["result"]["geometry"]["location"]["lat"];
-        address.longitude = res["result"]["geometry"]["location"]["lng"];
-        address.placeId = res["result"]["place_id"];
-        address.placeName = res["result"]["name"];
-        Provider.of<AppData>(context,listen: false).updatedropOffLocationAddress(address);
-        print("This is drop off location:: ");
-        print(address.placeName);
-        Navigator.pop(context,"obtainDirection");
-      }
+    if (res == "failed") {
+      return;
     }
+    if (res["status"] == "OK") {
+      Address address = Address(
+        placeFormattedAddress: placeAddress,
+        placeName: placeAddress,
+        placeId: "123456789",
+        latitude: 0.0,
+        longitude: 0.0,
+      );
+      address.latitude = res["result"]["geometry"]["location"]["lat"];
+      address.longitude = res["result"]["geometry"]["location"]["lng"];
+      address.placeId = res["result"]["place_id"];
+      address.placeName = res["result"]["name"];
+      Provider.of<AppData>(context, listen: false)
+          .updatedropOffLocationAddress(address);
+      print("This is drop off location:: ");
+      print(address.placeName);
+      Navigator.pop(context, "obtainDirection");
+    }
+  }
 }
