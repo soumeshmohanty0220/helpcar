@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:helpcar/AllWidgets/progressdialog.dart';
@@ -24,6 +25,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<LatLng>pLineCoordinates = [];
+  Set<Polyline>polylineSet={};
+
+  Set<Marker>markersSet={};
+  Set<Circle>circlesSet={};
+
 
   // ignore: prefer_final_fields, unused_field
   Completer<GoogleMapController> _controller = Completer();
@@ -171,6 +179,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     zoom: 15.0,
                   ),
                   myLocationEnabled: true,
+                  polylines: polylineSet,
+                  markers: markersSet,
+                  circles: circlesSet,
+
                 ),
 
                 //Drawer Button
@@ -357,9 +369,89 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     var details = await AssistantMethods.obtainPlaceDirectionDetails(pickUpLatLng, dropOffLatLng);
+    if(details != null){
+        print("Distance: ${details.distanceText}");
+        print("Duration: ${details.durationText}");
+
+    }
     Navigator.pop(context);
     print("This is Encoded Points :: ");
     print(details!.encodedPoints);
-
+  PolylinePoints polylinePoints = PolylinePoints();
+  List<PointLatLng> decodedPolyLinePointsResult = polylinePoints.decodePolyline(details.encodedPoints);
+  pLineCoordinates.clear();
+  if(decodedPolyLinePointsResult.isNotEmpty){
+    decodedPolyLinePointsResult.forEach((PointLatLng pointLatLng) { 
+      pLineCoordinates.add(LatLng(pointLatLng.latitude,pointLatLng.longitude));}
+  );
   }
+  polylineSet.clear();
+  setState(() {
+    Polyline polyline=Polyline(
+    color: Colors.red,
+    polylineId: PolylineId("PolylineID"),
+    jointType: JointType.round,
+    points: pLineCoordinates,
+    width: 5,
+    startCap: Cap.roundCap,
+    endCap: Cap.roundCap,
+    geodesic: true,
+  );
+  polylineSet.add(polyline);
+  });
+  LatLngBounds latLngBounds;
+  if(pickUpLatLng.latitude>dropOffLatLng.latitude && pickUpLatLng.longitude>dropOffLatLng.longitude){
+    latLngBounds=LatLngBounds(southwest: dropOffLatLng,northeast: pickUpLatLng);
+  }
+  else if(pickUpLatLng.longitude>dropOffLatLng.longitude){
+    latLngBounds=LatLngBounds(southwest: LatLng(pickUpLatLng.latitude,dropOffLatLng.longitude),northeast: LatLng(dropOffLatLng.latitude,pickUpLatLng.longitude));
+  }
+  else if(pickUpLatLng.latitude>dropOffLatLng.latitude){
+    latLngBounds=LatLngBounds(southwest: LatLng(dropOffLatLng.latitude,pickUpLatLng.longitude),northeast: LatLng(pickUpLatLng.latitude,dropOffLatLng.longitude));
+  }
+  else{
+    latLngBounds=LatLngBounds(southwest: pickUpLatLng,northeast: dropOffLatLng);
+  }
+  final GoogleMapController mapController = await _controller.future;
+  mapController.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds,30));
+  Marker pickUpMarker=Marker(
+    markerId: MarkerId("pickUpId"),
+    position: pickUpLatLng,
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+    infoWindow: InfoWindow(title: initialPos.placeName,snippet: "My Location"),
+  );
+
+  Marker dropOffMarker=Marker(
+    markerId: MarkerId("dropOffId"),
+    position: dropOffLatLng,
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+    infoWindow: InfoWindow(title: finalPos.placeName,snippet: "Drop Off Location"),
+  );
+  setState(() {
+    markersSet.add(pickUpMarker);
+    markersSet.add(dropOffMarker);
+  });
+  Circle pickUpCircle=Circle(
+    fillColor: Colors.blueAccent,
+    center: pickUpLatLng,
+    radius: 12,
+    strokeWidth: 4,
+    strokeColor: Colors.blueAccent,
+    circleId: CircleId("pickUpId"),
+  );
+  
+  Circle dropOffCircle=Circle(
+    fillColor: Colors.deepPurple,
+    center: dropOffLatLng,
+    radius: 12,
+    strokeWidth: 4,
+    strokeColor: Colors.deepPurple,
+    circleId: CircleId("dropOffId"),
+  );
+
+  setState(() {
+    circlesSet.add(pickUpCircle);
+    circlesSet.add(dropOffCircle);
+  });
+}
 }

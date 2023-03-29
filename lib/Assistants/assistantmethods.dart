@@ -52,7 +52,7 @@ DirectionDetails directionDetails = DirectionDetails(
   distanceValue: res["routes"][0]["legs"][0]["distance"]["value"],
   durationValue: res["routes"][0]["legs"][0]["duration"]["value"],
   encodedPoints: res["routes"][0]["overview_polyline"]["points"],
-);
+    );
 
   return directionDetails;
   }
