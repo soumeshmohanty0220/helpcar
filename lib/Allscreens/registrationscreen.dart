@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../AllWidgets/progressdialog.dart';
 import '../main.dart';
-import 'homescreen.dart';
+import 'requesterScreens/requesterHomePage.dart';
 import 'login_screen.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -230,7 +230,7 @@ class RegistrationScreen extends StatelessWidget {
       displayToastMessage(
           "Congratulations, your account has been created", context);
       Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.idScreen, (route) => false);
+          context, requesterHomePage.idScreen, (route) => false);
     } else {
       Navigator.pop(context);
       displayToastMessage("New user account has not been created", context);

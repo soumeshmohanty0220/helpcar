@@ -9,23 +9,23 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../AllWidgets/progressdialog.dart';
-import '../AllWidgets/requesterRideDetails.dart';
-import '../Assistants/assistantmethods.dart';
-import '../DataHandler/appData.dart';
-import '../HelperScreens/homepage.dart';
-import '../searchScreen.dart';
+import '../../AllWidgets/progressdialog.dart';
+import '../../AllWidgets/requesterRideDetails.dart';
+import '../../Assistants/assistantmethods.dart';
+import '../../DataHandler/appData.dart';
+import '../../searchScreen.dart';
+import '../HelperScreens/helperHomePage.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class requesterHomePage extends StatefulWidget {
+  const requesterHomePage({Key? key}) : super(key: key);
 
   static const String idScreen = "home";
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<requesterHomePage> createState() => _requesterHomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _requesterHomePageState extends State<requesterHomePage> {
   static var currentPageState = 1;
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
