@@ -44,6 +44,8 @@ dependencies:
   http: ^0.13.5
   provider: ^6.0.5
   flutter_polyline_points: ^1.0.0
+  lottie: ^2.3.1
+  animated_text_kit: ^4.2.2
 
 
 dev_dependencies:
@@ -83,6 +85,7 @@ flutter:
      - images/user_icon.png
      - images/helpcarlogo.jpg
      - images/lifeline.jpeg
+     - images/117478-delivery.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

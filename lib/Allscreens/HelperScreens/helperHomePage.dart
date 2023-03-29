@@ -20,6 +20,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         shadowColor: Colors.white,
         backgroundColor: const Color.fromARGB(255, 255, 162, 103),

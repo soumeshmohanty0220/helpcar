@@ -67,7 +67,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                       child: TextField(
                         controller: nameTextEditingController,
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           hintText: "Enter your name",
                           hintStyle: TextStyle(color: Colors.black87),
@@ -130,7 +130,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                       child: TextField(
                         controller: passwordTextEditingController,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           hintText: "Password",
                           hintStyle: TextStyle(color: Colors.black87),

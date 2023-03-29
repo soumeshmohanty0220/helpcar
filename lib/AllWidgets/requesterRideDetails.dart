@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:helpcar/Allscreens/requesterScreens/requesterHelperDetails.dart';
 
 class requestRideDetails extends StatefulWidget {
   final String loc1;
@@ -105,7 +106,12 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => requesterHelperDetails()));
+                    },
                     child: Text("Car Pool"),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -118,7 +124,12 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => requesterHelperDetails()));
+                    },
                     child: Text("HelpCar"),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
