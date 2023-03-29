@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, use_build_context_synchronously
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:helpcar/AllWidgets/progressdialog.dart';
 import 'package:helpcar/Assistants/assistantmethods.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:helpcar/HelperScreens/homepage.dart';
@@ -260,8 +261,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 5.0,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                                onTap: () async{
+                                  var res = await Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                                  if(res == "obtainDirection"){
+                                    await getPlaceDirection();
+                                  }
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -340,5 +344,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
     );
+  }
+  Future<void> getPlaceDirection()async{
+    var initialPos = Provider.of<AppData>(context,listen: false).userPickUpLocation;
+    var finalPos = Provider.of<AppData>(context,listen: false).dropOfflocation;
+    var pickUpLatLng = LatLng(initialPos!.latitude, initialPos.longitude);
+    var dropOffLatLng = LatLng(finalPos!.latitude, finalPos.longitude);
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => ProgressDialog(message: "Please wait...",)
+    );
+
+    var details = await AssistantMethods.obtainPlaceDirectionDetails(pickUpLatLng, dropOffLatLng);
+    Navigator.pop(context);
+    print("This is Encoded Points :: ");
+    print(details!.encodedPoints);
+
   }
 }
