@@ -9,7 +9,7 @@ import 'package:helpcar/Models/placepredictions.dart';
 import 'package:helpcar/configmaps.dart';
 import 'package:provider/provider.dart';
 
-import 'Assistants/requestAssistant.dart';
+import 'Assistants/requestassistant.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
