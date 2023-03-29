@@ -31,7 +31,7 @@ class AssistantMethods {
       );
 
       Provider.of<AppData>(context, listen: false)
-          .updatePicupLocationAddress(userPickUpAddress);
+          .updatePickupLocationAddress(userPickUpAddress);
     }
 
     return placeAddress;

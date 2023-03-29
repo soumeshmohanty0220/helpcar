@@ -1,13 +1,13 @@
-// ignore_for_file: avoid_init_to_null, file_names
+
 
 import 'package:flutter/material.dart';
 import '../Models/address.dart';
 
 class AppData extends ChangeNotifier
 {
-  Address? userPickUpLocation = null;   // Initialize with default value of null
-  Address? dropOfflocation = null; 
-  void updatePicupLocationAddress(Address pickUpAddress)
+  Address? userPickUpLocation;   // Initialize with default value of null
+  Address? dropOfflocation; 
+  void updatePickupLocationAddress(Address pickUpAddress)
   {
     userPickUpLocation = pickUpAddress;
     notifyListeners();
