@@ -1,11 +1,14 @@
 // ignore_for_file: unnecessary_new
 
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:helpcar/Assistants/requestassistant.dart';
+import 'package:helpcar/Models/directiondetails.dart';
 import 'package:provider/provider.dart';
 
 import '../DataHandler/appData.dart';
 import '../Models/address.dart';
+import '../configmaps.dart';
 
 class AssistantMethods {
   static Future<String> searchCoordinateAddress(
