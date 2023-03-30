@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types, sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -35,28 +37,31 @@ class _requestRideDetailsState extends State<requestRideDetails> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: Text(
                     widget.loc1,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Icon(
                   Icons.arrow_right_alt,
-                  size: 30,
+                  size: 50,
+                  color: Colors.blueAccent,
                 ),
                 Flexible(
                   child: Text(
                     widget.loc2,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -73,13 +78,15 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                   children: [
                     Text(
                       "Distance",
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(fontSize: 15),
                     ),
                     Text(
-                      "4 km",
+                      "4.7 km",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 65, 65, 65)),
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 250, 4, 4)),
+                          
                     )
                   ],
                 ),
@@ -88,22 +95,23 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                   children: [
                     Text(
                       "Estimated Time",
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(fontSize: 15,color: Colors.black),
                     ),
                     Text(
                       "15 mins",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 65, 65, 65)),
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 245, 4, 4)),
                     )
                   ],
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 0, right: 0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
                     onPressed: () {
@@ -112,16 +120,16 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                           MaterialPageRoute(
                               builder: (context) => requesterHelperDetails()));
                     },
-                    child: Text("Car Pool"),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      elevation: 0,
+                      elevation: 50,
                       backgroundColor: Color.fromARGB(255, 55, 124, 55),
                       foregroundColor: Color.fromARGB(255, 255, 255, 255),
-                      fixedSize: Size(100, 50),
+                      fixedSize: Size(140, 50),
                     ),
+                    child: Text("Car Pool"),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -130,15 +138,15 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                           MaterialPageRoute(
                               builder: (context) => requesterHelperDetails()));
                     },
-                    child: Text("HelpCar"),
+                    child: Text("HelpCAR"),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      elevation: 0,
+                      elevation: 50,
                       backgroundColor: Color.fromARGB(255, 219, 11, 11),
                       foregroundColor: Color.fromARGB(255, 248, 248, 248),
-                      fixedSize: Size(100, 50),
+                      fixedSize: Size(140, 50),
                     ),
                   ),
                 ],

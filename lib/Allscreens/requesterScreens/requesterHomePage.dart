@@ -254,8 +254,8 @@ class _requesterHomePageState extends State<requesterHomePage> {
                       bottom: 0.0,
                       child: (currentPageState == 2)
                           ? requestRideDetails(
-                              loc1: "BBSR",
-                              loc2: "RKL",
+                              loc1: "IIIT Bhubaneswar",
+                              loc2: "SUM Hospital",
                             )
                           : Container(
                               height: 280.0,

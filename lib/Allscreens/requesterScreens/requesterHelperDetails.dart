@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -27,6 +29,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
 
   @override
   Widget build(BuildContext context) {
+    bool hasClicked = false;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -97,16 +100,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                 ),
               ],
             ),
-            (hasRiderMatched)
-                ? Text(
-                    "has Arrived",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 40.0,
-                    ),
-                  )
-                : Text(
+            Text(
                     "is On the Way",
                     style: TextStyle(
                       color: Colors.black,
@@ -122,8 +116,15 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
               children: [
                 helpDetailsWidget(),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text("helper ARRIVED"),
+                  onPressed: hasClicked ? (){} : () { setState(() {hasClicked = true;
+                  }); 
+                    
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: hasClicked? Color.fromARGB(31, 138, 138, 138): Color.fromARGB(255, 0, 224, 206),
+                    
+                  ),
+                  child: Text("HELPER ARRIVED",),
                 )
               ],
             )
@@ -136,17 +137,12 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
       padding: EdgeInsets.all(20.0),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 70,
-            backgroundImage: NetworkImage(
-              "https://www.example.com/profile_picture.jpg",
-            ),
-          ),
-          SizedBox(height: 16.0),
+          Icon(Icons.person,color: Colors.blue,size: 120.0,),
+          SizedBox(height: 20.0),
           Column(
             children: [
               Text(
-                "John Doe",
+                "Suman Sahoo",
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -154,10 +150,10 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
               ),
               SizedBox(height: 8.0),
               Text(
-                "+1 (123) 456-7890",
+                "+91 8144498292",
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.grey[600],
+                  color: Color.fromARGB(151, 18, 75, 25),
                 ),
               ),
             ],
