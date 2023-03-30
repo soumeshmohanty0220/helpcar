@@ -20,7 +20,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 8), () {
       setState(() {
         hasRiderMatched = true;
       });
@@ -116,12 +116,12 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
               children: [
                 helpDetailsWidget(),
                 ElevatedButton(
-                  onPressed: hasClicked ? (){} : () { setState(() {hasClicked = true;
+                  onPressed: hasClicked ? null: () { setState(() {hasClicked = true;
                   }); 
                     
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: hasClicked? Color.fromARGB(31, 138, 138, 138): Color.fromARGB(255, 0, 224, 206),
+                    backgroundColor: hasClicked? Color.fromARGB(31, 138, 138, 138): Color.fromARGB(255, 247, 224, 24),
                     
                   ),
                   child: Text("HELPER ARRIVED",),

@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_literals_to_create_immutables, unused_import, library_private_types_in_public_api
+
+// ignore_for_file: unused_import, unused_field, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:ffi';
 import 'package:flutter/material.dart';
@@ -23,33 +24,33 @@ class _HelperHomePageState extends State<HelperHomePage> {
         automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         shadowColor: Colors.white,
-        backgroundColor: const Color.fromARGB(255, 255, 162, 103),
-        toolbarHeight: 300,
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hey Helper",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 40.0,
-                  ),
+        backgroundColor: Color.fromARGB(255, 252, 80, 0),
+        toolbarHeight: 250,
+        title: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hey Helper !",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 40.0,
                 ),
-                Text(
-                  "Add Your Way",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Add your way",
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.0,
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -59,8 +60,8 @@ class _HelperHomePageState extends State<HelperHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: helperCurrentPath(),
+              padding: const EdgeInsets.all(5.0),
+              child: HelperCurrentPath(),
             ),
             SizedBox(
               width: double.infinity,
@@ -75,17 +76,18 @@ class _HelperHomePageState extends State<HelperHomePage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  elevation: 0,
+                  elevation: 0, backgroundColor: Colors.deepOrange,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  backgroundColor: const Color.fromARGB(255, 247, 90, 0),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 child: const Text(
                   "Add Path",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.black),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
@@ -95,3 +97,6 @@ class _HelperHomePageState extends State<HelperHomePage> {
     );
   }
 }
+
+
+

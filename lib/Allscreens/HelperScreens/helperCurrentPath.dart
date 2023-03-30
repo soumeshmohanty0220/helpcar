@@ -1,55 +1,77 @@
-// ignore_for_file: camel_case_types, prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/basic.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class helperCurrentPath extends StatefulWidget {
-  const helperCurrentPath({super.key});
-  static String idScreen = "currentpath";
-  @override
-  State<helperCurrentPath> createState() => _helperCurrentPathState();
-}
-
-class _helperCurrentPathState extends State<helperCurrentPath> {
+class HelperCurrentPath extends StatelessWidget {
+  const HelperCurrentPath({Key? key}) : super(key: key);
+  
+  static const String idScreen = "currentpath";
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 0,
-      width: double.infinity,
-      padding: EdgeInsets.all(20),
+      width: 300,
+      padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 216, 216, 216),
-          borderRadius: BorderRadius.circular(20)),
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.notifications,
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                "CURRENT PATH",
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 50,
               ),
             ],
+          ),
+          SizedBox(
+            height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Gothapatna",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+              Expanded(
+                child: Text(
+                  "Chatabar",
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               Icon(
                 Icons.arrow_right_alt,
-                size: 30,
+                size: 50,
+                color: Colors.black,
               ),
-              Flexible(
+              Expanded(
                 child: Text(
                   "Vani Vihar",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-
-                  // overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -57,48 +79,37 @@ class _helperCurrentPathState extends State<helperCurrentPath> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Out Time",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    "9:45 am",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 65, 65, 65)),
-                  )
-                ],
-              ),
-            ],
+          Text(
+            "OUT TIME",
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.blue,
+            ),
           ),
           SizedBox(
-            height: 10,
+            height: 4,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Estimated Reaching Time",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    "11:45 am",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 65, 65, 65)),
-                  )
-                ],
-              ),
-            ],
+          Text(
+            "9:45 AM",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+            "",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+              fontSize: 18,
+            ),
           ),
         ],
       ),
