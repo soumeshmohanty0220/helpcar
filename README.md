@@ -7,7 +7,8 @@ At HelpCar, we believe in building a community of support and trust, where users
 
 Join us in our mission to make transportation accessible and sustainable for all. Download HelpCar today and start contributing towards a better tomorrow.
 
-STEPS TO RUN THE PROJECT
+
+**STEPS TO RUN THE PROJECT**
 
 Step 1 :
 Clone the repository to your local machine:
@@ -16,8 +17,10 @@ git clone https://github.com/soumeshmohanty0220/helpcar.git
 ```
 
 Step 2 :
-Make sure you have Flutter installed on your machine. You can download it from the official Flutter website: https://flutter.dev/docs/get-started/install
-
+Make sure you have Flutter installed on your machine. You can download it from the official Flutter website: 
+```
+https://flutter.dev/docs/get-started/install
+```
 Step 3 :
 Open the project in your preferred editor.
 
