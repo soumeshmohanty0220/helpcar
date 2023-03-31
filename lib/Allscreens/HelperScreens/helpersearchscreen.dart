@@ -84,7 +84,7 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
             SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              height: 50.0,
+              height: 40.0,
               child: ElevatedButton(
                 onPressed: () {
                   {
@@ -94,7 +94,7 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
                 child: Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 15.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
