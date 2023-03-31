@@ -11,7 +11,9 @@ STEPS TO RUN THE PROJECT
 
 Step 1 :
 Clone the repository to your local machine:
+```
 git clone https://github.com/soumeshmohanty0220/helpcar.git
+```
 
 Step 2 :
 Make sure you have Flutter installed on your machine. You can download it from the official Flutter website: https://flutter.dev/docs/get-started/install
@@ -21,20 +23,15 @@ Open the project in your preferred editor.
 
 Step 4 : 
 Run the following command in your terminal to download the required packages:
-flutter pub get
+```
+flutter pub get 
+```
 
 Step 5 :
 Connect your device or start an emulator.If you are using an android emulator please make sure you are using the emulator which has Google Play Sevices available in it. Otherwise if you are using your device, please ensure to turn ON USB debugging mode.
 
 Step 6 :
 Run the following command to build and launch the app:
+```
 flutter run
-Download or clone this repo by using the link below:
-
-https://github.com/zubairehman/flutter-boilerplate-project.git
-Step 2:
-
-Go to project root and execute the following command in console to get the required dependencies:
-
-flutter pub get 
-
+```
