@@ -15,7 +15,7 @@ class AssistantMethods {
       Position position, context) async {
     String placeAddress = "";
     String url =
-        "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=AIzaSyC8VZaPR5Hpf5po7MdL25UY9At7vDDl2kc";
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey";
     var response = await RequestAssistant.getRequest(url);
 
     if (response != "failed") {
