@@ -1,15 +1,66 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api, prefer_const_constructors, unnecessary_string_interpolations, unnecessary_null_comparison
 
-class HelperCurrentPath extends StatelessWidget {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
+
+class HelperCurrentPath extends StatefulWidget {
   const HelperCurrentPath({Key? key}) : super(key: key);
-  
-  static const String idScreen = "currentpath";
-  
+
+  @override
+  _HelperCurrentPathState createState() => _HelperCurrentPathState();
+}
+
+class _HelperCurrentPathState extends State<HelperCurrentPath> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _database = FirebaseDatabase.instance.reference();
+
+  String? _currentLocation;
+  String? _destination;
+  String? _time;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPath();
+  }
+
+
+Future<void> _fetchPath() async {
+final DatabaseReference _database = FirebaseDatabase.instance.reference();
+final User? user = FirebaseAuth.instance.currentUser;
+
+if (user != null) {
+  DatabaseReference userRef = _database.child('users').child(user.uid);
+
+  // Update data in realtime
+  userRef.child('paths').onValue.listen((event) {
+    final Map<dynamic, dynamic>? data = event.snapshot.value as Map<dynamic, dynamic>?;
+    if (data != null) {
+      setState(() {
+        _currentLocation = data['currentLocation'];
+        _destination = data['destination'];
+        _time = data['time'];
+      });
+    } else {
+      setState(() {
+        _currentLocation = 'N/A';
+        _destination = 'N/A';
+        _time = 'N/A';
+      });
+    }
+  });
+ }
+}
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(20),
@@ -48,7 +99,7 @@ class HelperCurrentPath extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Chatabar",
+                '${_currentLocation ?? "N/A"}',
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 22,
@@ -64,7 +115,7 @@ class HelperCurrentPath extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  "Vani Vihar",
+                '${_destination ?? "N/A"}',
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 22,
@@ -90,7 +141,7 @@ class HelperCurrentPath extends StatelessWidget {
             height: 4,
           ),
           Text(
-            "9:45 AM",
+            '${_time ?? "N/A"}',
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.black87,
@@ -99,17 +150,6 @@ class HelperCurrentPath extends StatelessWidget {
           ),
           SizedBox(
             height: 12,
-          ),
-          SizedBox(
-            height: 4,
-          ),
-          Text(
-            "",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-              fontSize: 18,
-            ),
           ),
         ],
       ),

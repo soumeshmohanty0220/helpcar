@@ -84,7 +84,6 @@ flutter:
      - images/taxi.png
      - images/user_icon.png
      - images/helpcarlogo.jpg
-     - images/lifeline.jpeg
      - images/117478-delivery.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
