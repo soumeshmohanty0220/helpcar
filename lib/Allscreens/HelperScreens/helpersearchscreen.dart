@@ -1,8 +1,8 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api
-
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
@@ -45,18 +45,25 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
 
     try {
       // get the current position using Geolocator package
-      Position position = await Geolocator.getCurrentPosition(
+      Position currentPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      double lat = position.latitude;
-      double long = position.longitude;
+      double currentLat = currentPosition.latitude;
+      double currentLong = currentPosition.longitude;
+
+      // get the position of the destination location using Geolocator package
+      List<Location> locations = await locationFromAddress(destination);
+      double destinationLat = locations[0].latitude;
+      double destinationLong = locations[0].longitude;
 
       // save the path to Firebase Realtime Database
       _database.child('users').child(user.uid).child('paths').set({
         'currentLocation': currentLocation,
         'destination': destination,
         'time': time,
-        'latitude': lat,
-        'longitude': long,
+        'currentLatitude': currentLat,
+        'currentLongitude': currentLong,
+        'destinationLatitude': destinationLat,
+        'destinationLongitude': destinationLong,
       });
 
       // show a success message
@@ -92,7 +99,11 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
               decoration: const InputDecoration(
                 labelText: 'Current location',
                 hintText: 'Enter your current location',
-                icon: Icon(Icons.location_on, color: Colors.blue,size: 30,),
+                icon: Icon(
+                  Icons.location_on,
+                  color: Colors.blue,
+                  size: 30,
+                ),
               ),
             ),
             TextField(
@@ -100,14 +111,22 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
               decoration: const InputDecoration(
                 labelText: 'Destination',
                 hintText: 'Enter your destination location',
-                icon: Icon(Icons.location_on, color: Colors.blue,size: 30,),
+                icon: Icon(
+                  Icons.location_on,
+                  color: Colors.blue,
+                  size: 30,
+                ),
               ),
             ),
             TextField(
               controller: timeController,
               decoration: const InputDecoration(
                 labelText: 'Time of leaving (hh:mm)',
-                icon: Icon(Icons.lock_clock, color: Colors.blue,size: 30,),
+                icon: Icon(
+                  Icons.lock_clock,
+                  color: Colors.blue,
+                  size: 30,
+                ),
               ),
               keyboardType: TextInputType.datetime,
               onTap: () async {
@@ -117,8 +136,7 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
                   initialTime: TimeOfDay.now(),
                 );
                 if (selectedTime != null) {
-                  timeController.text =
-                      DateFormat('HH:mm').format(DateTime(
+                  timeController.text = DateFormat('HH:mm').format(DateTime(
                     0,
                     0,
                     0,
