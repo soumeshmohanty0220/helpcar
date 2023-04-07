@@ -28,33 +28,48 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
     _fetchPath();
   }
 
+  Future<void> _fetchPath() async {
+    final DatabaseReference _database = FirebaseDatabase.instance.reference();
+    final User? user = FirebaseAuth.instance.currentUser;
 
-Future<void> _fetchPath() async {
-final DatabaseReference _database = FirebaseDatabase.instance.reference();
-final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DatabaseReference userRef = _database.child('users').child(user.uid);
 
-if (user != null) {
-  DatabaseReference userRef = _database.child('users').child(user.uid);
-
-  // Update data in realtime
-  userRef.child('paths').onValue.listen((event) {
-    final Map<dynamic, dynamic>? data = event.snapshot.value as Map<dynamic, dynamic>?;
-    if (data != null) {
-      setState(() {
-        _currentLocation = data['currentLocation'];
-        _destination = data['destination'];
-        _time = data['time'];
+      // Update data in realtime
+      userRef.child('paths').onValue.listen((event) {
+        final Map<dynamic, dynamic>? data =
+            event.snapshot.value as Map<dynamic, dynamic>?;
+        if (data != null) {
+          setState(() {
+            _currentLocation = data['currentLocation'];
+            _destination = data['destination'];
+            _time = data['time'];
+          });
+        } else {
+          setState(() {
+            _currentLocation = 'N/A';
+            _destination = 'N/A';
+            _time = 'N/A';
+          });
+        }
       });
-    } else {
+    }
+  }
+
+  void _removePath() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      DatabaseReference userRef = _database.child('users').child(user.uid);
+      await userRef.child('paths').remove();
+
       setState(() {
         _currentLocation = 'N/A';
         _destination = 'N/A';
         _time = 'N/A';
       });
     }
-  });
- }
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +114,7 @@ if (user != null) {
             children: [
               Expanded(
                 child: Text(
-                '${_currentLocation ?? "N/A"}',
+                  '${_currentLocation ?? "N/A"}',
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 22,
@@ -115,7 +130,7 @@ if (user != null) {
               ),
               Expanded(
                 child: Text(
-                '${_destination ?? "N/A"}',
+                  '${_destination ?? "N/A"}',
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 22,
@@ -150,6 +165,26 @@ if (user != null) {
           ),
           SizedBox(
             height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  _removePath();
+                },
+                icon: Icon(Icons.delete),
+                label: Text('Remove'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16.0),
+            ],
           ),
         ],
       ),
