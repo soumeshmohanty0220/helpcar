@@ -4,19 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:helpcar/Allscreens/requesterScreens/requesterHelperDetails.dart';
+import 'package:helpcar/Models/directiondetails.dart';
 
 class requestRideDetails extends StatefulWidget {
   final String loc1;
   final String loc2;
-  const requestRideDetails({super.key, required this.loc1, required this.loc2});
+  final String distanceText;
+  final String durationText;
+   final DirectionDetails? details;
+
+  const requestRideDetails({
+    Key? key,
+    required this.loc1,
+    required this.loc2,
+    required this.distanceText,
+    required this.durationText,
+    this.details,
+  }) : super(key: key);
 
   @override
   State<requestRideDetails> createState() => _requestRideDetailsState();
 }
 
+
 class _requestRideDetailsState extends State<requestRideDetails> {
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       height: 250,
       width: double.infinity,
@@ -81,7 +95,7 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                       style: TextStyle(fontSize: 15),
                     ),
                     Text(
-                      "4.7 km",
+                      widget.distanceText,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 20,
@@ -98,7 +112,7 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                       style: TextStyle(fontSize: 15,color: Colors.black),
                     ),
                     Text(
-                      "15 mins",
+                      widget.durationText,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 20,

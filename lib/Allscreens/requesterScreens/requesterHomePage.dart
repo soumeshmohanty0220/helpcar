@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:helpcar/Models/directiondetails.dart';
 import 'package:provider/provider.dart';
 
 import '../../AllWidgets/progressdialog.dart';
@@ -28,7 +29,7 @@ class requesterHomePage extends StatefulWidget {
 
 class _requesterHomePageState extends State<requesterHomePage> {
   static var currentPageState = 1;
-
+  DirectionDetails? details;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<LatLng> pLineCoordinates = [];
@@ -41,8 +42,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
   Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController mapController;
   late LatLng _center = LatLng(0, 0);
-  String _currentAddress="";
-  
+  String _currentAddress = "";
 
   // ignore: prefer_final_fields
 
@@ -246,155 +246,158 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     ),
                   ),
                 ),
-                ChangeNotifierProvider(
-                  create: (context) => AppData(),
-                  child: Positioned(
-                      left: 0.0,
-                      right: 0.0,
-                      bottom: 0.0,
-                      child: (currentPageState == 2)
-                          ? requestRideDetails(
-                              loc1: "IIIT Bhubaneswar",
-                              loc2: "SUM Hospital",
-                            )
-                          : Container(
-                              height: 280.0,
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 241, 228, 199),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.0),
-                                  topRight: Radius.circular(15.0),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 16.0,
-                                    spreadRadius: 0.5,
-                                    offset: const Offset(0.7, 0.7),
-                                  ),
-                                ],
+                Positioned(
+                    left: 0.0,
+                    right: 0.0,
+                    bottom: 0.0,
+                    child: (currentPageState == 2)
+                        ? requestRideDetails(
+                            loc1: Provider.of<AppData>(context, listen: false)
+                                .userPickUpLocation!
+                                .placeName,
+                            loc2: Provider.of<AppData>(context, listen: false)
+                                .dropOfflocation!
+                                .placeName,
+                            distanceText: details?.distanceText ?? 'Unknown',
+                            durationText: details?.durationText ?? 'Unknown',
+                          )
+                        : Container(
+                            height: 280.0,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 241, 228, 199),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15.0),
+                                topRight: Radius.circular(15.0),
                               ),
-                              child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0, vertical: 18.0),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(height: 10.0),
-                                        Text(
-                                          "Hi there",
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                          ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  blurRadius: 16.0,
+                                  spreadRadius: 0.5,
+                                  offset: const Offset(0.7, 0.7),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 18.0),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        "Hi there",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
                                         ),
-                                        Text(
-                                          "Need Help?",
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontFamily: "Brand Bold"),
-                                        ),
-                                        SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            var res = await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SearchScreen()));
-                                            if (res == "obtainDirection") {
-                                              await getPlaceDirection();
-                                            }
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black,
-                                                    blurRadius: 4.0,
-                                                    spreadRadius: 0.5,
-                                                    offset:
-                                                        const Offset(0.7, 0.7),
-                                                  ),
-                                                ]),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(12.0),
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.search,
-                                                    color: Colors.blueAccent,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  Text("Search Destination"),
-                                                ],
-                                              ),
+                                      ),
+                                      Text(
+                                        "Need Help?",
+                                        style: TextStyle(
+                                            fontSize: 15.0,
+                                            fontFamily: "Brand Bold"),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          var res = await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SearchScreen()));
+                                          if (res == "obtainDirection") {
+                                            await getPlaceDirection();
+                                          }
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 4.0,
+                                                  spreadRadius: 0.5,
+                                                  offset:
+                                                      const Offset(0.7, 0.7),
+                                                ),
+                                              ]),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(12.0),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.search,
+                                                  color: Colors.blueAccent,
+                                                ),
+                                                SizedBox(
+                                                  width: 10.0,
+                                                ),
+                                                Text("Search Destination"),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 22.0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.location_on,
-                                              color: Colors.red,
-                                            ),
-                                            SizedBox(
-                                              width: 15.0,
-                                            ),
-                                            Builder(builder: (context) {
-                                              return Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 265.0,
-                                                    child: Text(
-                                                      // Provider.of<AppData>(
-                                                      //                 context)
-                                                      //             .userPickUpLocation!=
-                                                      //         null
-                                                      //     ? Provider.of<AppData>(
-                                                      //             context)
-                                                      //         .userPickUpLocation!
-                                                      //         .placeName
-                                                      //     : "Pickup Location",
-                                                      "$_currentAddress",
-                                                      textAlign: TextAlign
-                                                          .left, // Set text alignment
-                                                      softWrap: true,
-                                                      maxLines: 2,
-                                                    ),
+                                      ),
+                                      SizedBox(
+                                        height: 22.0,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                          ),
+                                          SizedBox(
+                                            width: 15.0,
+                                          ),
+                                          Builder(builder: (context) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 265.0,
+                                                  child: Text(
+                                                    // Provider.of<AppData>(
+                                                    //                 context)
+                                                    //             .userPickUpLocation!=
+                                                    //         null
+                                                    //     ? Provider.of<AppData>(
+                                                    //             context)
+                                                    //         .userPickUpLocation!
+                                                    //         .placeName
+                                                    //     : "Pickup Location",
+                                                    "$_currentAddress",
+                                                    textAlign: TextAlign
+                                                        .left, // Set text alignment
+                                                    softWrap: true,
+                                                    maxLines: 2,
                                                   ),
-                                                  SizedBox(
-                                                    height: 3.0,
-                                                  ),
-                                                  Text(
-                                                    "Your Current Location",
-                                                    style: TextStyle(
-                                                        color: Colors.blue,
-                                                        fontSize: 12.0),
-                                                  ),
-                                                ],
-                                              );
-                                            }),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                            )),
-                ),
+                                                ),
+                                                SizedBox(
+                                                  height: 3.0,
+                                                ),
+                                                Text(
+                                                  "Your Current Location",
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 12.0),
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          )),
               ],
             ),
     );
@@ -416,6 +419,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
 
     var details = await AssistantMethods.obtainPlaceDirectionDetails(
         pickUpLatLng, dropOffLatLng);
+    print("Details: $details");
     if (details != null) {
       print("Distance: ${details.distanceText}");
       print("Duration: ${details.durationText}");

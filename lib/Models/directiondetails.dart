@@ -7,5 +7,8 @@ class DirectionDetails
   String encodedPoints;
 
   DirectionDetails({required this.distanceText, required this.durationText, required this.distanceValue, required this.durationValue, required this.encodedPoints});
-  
+  @override
+  String toString() {
+    return 'DirectionDetails(distanceText: $distanceText, durationText: $durationText)';
+  }
 }

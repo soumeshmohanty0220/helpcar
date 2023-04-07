@@ -22,6 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController pickUpTextEditingController = TextEditingController();
   TextEditingController destinationTextEditingController =
       TextEditingController();
+  String get destinationText => destinationTextEditingController.text;
 
   List<PlacePredictions> placePredictionsList = [];
 
