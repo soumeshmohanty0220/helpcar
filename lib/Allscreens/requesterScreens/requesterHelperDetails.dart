@@ -289,7 +289,24 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                 } else {
                   // If there is no data, display a message indicating that no match was found.
                   return Center(
-                    child: Text('No match found.'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.car_crash,
+                            color: Colors.red,
+                            size: 80,
+                          ),
+                          Text('No match found!',
+                              style: TextStyle(
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          SizedBox(height: 20.0),
+                        ],
+                      ),
+                    ),
                   );
                 }
               }

@@ -48,6 +48,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   geocoding: ^2.1.0
   cloud_firestore: ^4.5.0
+  shared_preferences: ^2.1.0
 
 
 dev_dependencies:

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -17,6 +18,7 @@ import '../../DataHandler/appData.dart';
 import '../../Models/address.dart';
 import '../../searchScreen.dart';
 import '../HelperScreens/helperHomePage.dart';
+import '../login_screen.dart';
 
 class requesterHomePage extends StatefulWidget {
   const requesterHomePage({Key? key}) : super(key: key);
@@ -179,6 +181,21 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.redAccent),
+                title: Text(
+                  "Log Out",
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                onTap: () async {
+                  try {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacementNamed(context, LoginScreen.idScreen);
+                  } catch (e) {
+                    print("Error logging out: $e");
+                  }
+                },
               ),
             ],
           ),

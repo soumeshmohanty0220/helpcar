@@ -1,8 +1,10 @@
 // ignore_for_file: equal_keys_in_map, deprecated_member_use, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:helpcar/Allscreens/HelperScreens/helperHomePage.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,51 @@ void main() async {
 DatabaseReference userRef =
     FirebaseDatabase.instance.reference().child("users");
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var auth=FirebaseAuth.instance;
+  var isLogin;
+
+checkiflogin() async {
+  FirebaseAuth.instance.authStateChanges().listen((user) {
+    if (user == null) {
+      print('User is currently signed out!');
+      setState(() {
+        isLogin = false;
+      });
+    } else {
+      print('User is signed in!');
+      setState(() {
+        isLogin = true; 
+      });
+    }
+  });
+  if (auth.currentUser == null) {
+    setState(() {
+      isLogin = false;
+    });
+  } else {
+    setState(() {
+      isLogin = true;
+    });
+  }
+}
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    checkiflogin();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -31,7 +76,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "Brand Bold",
           primarySwatch: Colors.orange,
         ),
-        initialRoute: LoginScreen.idScreen,
+        initialRoute: isLogin? requesterHomePage.idScreen : LoginScreen.idScreen,
         routes: {
           RegistrationScreen.idScreen: (context) => RegistrationScreen(),
           LoginScreen.idScreen: (context) => LoginScreen(),
