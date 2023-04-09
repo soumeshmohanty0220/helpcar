@@ -12,7 +12,8 @@ import 'package:firebase_database/firebase_database.dart';
 
 class requesterHelperDetails extends StatefulWidget {
   const requesterHelperDetails({super.key});
-
+  final String userName = "";
+  final String userPhoneNumber = "";
   @override
   State<requesterHelperDetails> createState() => _requesterHelperDetailsState();
 }
@@ -31,7 +32,8 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
     _performPathCalculation(context);
   }
 
-  Future<void> _performPathCalculation(BuildContext context) async {
+  Future<Map<String, String>?> _performPathCalculation(
+      BuildContext context) async {
     // Get user input locations
     LatLng startLatLng = LatLng(
       Provider.of<AppData>(context, listen: false).userPickUpLocation!.latitude,
@@ -43,18 +45,16 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
       Provider.of<AppData>(context, listen: false).dropOfflocation!.latitude,
       Provider.of<AppData>(context, listen: false).dropOfflocation!.longitude,
     );
-
-// Get all the paths from the database
+    // Get all the paths from the database
     DatabaseReference pathsRef =
         FirebaseDatabase.instance.reference().child('users');
     DatabaseEvent event = await pathsRef.once();
     DataSnapshot snapshot = event.snapshot;
-    print(snapshot.value);
     if (snapshot.value != null) {
       Map<dynamic, dynamic> values = snapshot.value as Map<dynamic, dynamic>;
 
       // Iterate over all the paths and check if it contains the user's input locations
-      values.forEach((key, value) {
+      for (var value in values.values) {
         Map<dynamic, dynamic> userData = value;
         if (userData['paths'] != null) {
           Map<dynamic, dynamic> path = userData['paths'];
@@ -62,28 +62,38 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
               LatLng(path['currentLatitude'], path['currentLongitude']);
           LatLng pathDestinationLatLng =
               LatLng(path['destinationLatitude'], path['destinationLongitude']);
-              
+
           // Perform ray casting algorithm to check if the user's input locations are on the path
           if (crossProductAlgorithm(pathStartLatLng, pathDestinationLatLng,
               startLatLng, destinationLatLng)) {
+            // Get the user's name and phone number
             String userName = userData['name'];
             String userPhoneNumber = userData['phone'];
-            
-            // Display the user's name and phone number
-            print("User Name: $userName");
-            print("User Phone Number: $userPhoneNumber");
-          }
-          else{
-            print("No match");
+            print('User name: $userName');
+            print('User phone number: $userPhoneNumber');
+
+            // Return the user's name and phone number in a Map
+            return {
+              'userName': userName,
+              'userPhoneNumber': userPhoneNumber,
+            };
+          } else {
+            print('No match found');
           }
         }
-      });
+      }
     }
+
+    // Return null if no match was found
+    return null;
   }
 
   // Cross product algorithm to check if the user's input locations are on the path
-  bool crossProductAlgorithm(LatLng pathStartLatLng,
-      LatLng pathDestinationLatLng, LatLng startLatLng, LatLng destinationLatLng) {
+  bool crossProductAlgorithm(
+      LatLng pathStartLatLng,
+      LatLng pathDestinationLatLng,
+      LatLng startLatLng,
+      LatLng destinationLatLng) {
     double x1 = pathStartLatLng.latitude;
     double y1 = pathStartLatLng.longitude;
     double x2 = pathDestinationLatLng.latitude;
@@ -102,10 +112,16 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
     double x = (pre * (x3 - x4) - (x1 - x2) * post) / d;
     double y = (pre * (y3 - y4) - (y1 - y2) * post) / d;
 
-    if (x < min(x1, x2) || x > max(x1, x2) || x < min(x3, x4) || x > max(x3, x4)) {
+    if (x < min(x1, x2) ||
+        x > max(x1, x2) ||
+        x < min(x3, x4) ||
+        x > max(x3, x4)) {
       return false;
     }
-    if (y < min(y1, y2) || y > max(y1, y2) || y < min(y3, y4) || y > max(y3, y4)) {
+    if (y < min(y1, y2) ||
+        y > max(y1, y2) ||
+        y < min(y3, y4) ||
+        y > max(y3, y4)) {
       return false;
     }
     return true;
@@ -130,7 +146,6 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
 
   @override
   Widget build(BuildContext context) {
-    bool hasClicked = false;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -212,65 +227,76 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
           ],
         ),
       ),
-      body: (hasRiderMatched)
-          ? Column(
-              children: [
-                helpDetailsWidget(),
-                ElevatedButton(
-                  onPressed: hasClicked
-                      ? null
-                      : () {
-                          setState(() {
-                            hasClicked = true;
-                          });
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: hasClicked
-                        ? Color.fromARGB(31, 138, 138, 138)
-                        : Color.fromARGB(255, 247, 224, 24),
-                  ),
-                  child: Text(
-                    "HELPER ARRIVED",
-                  ),
-                )
-              ],
-            )
-          : Center(child: Lottie.asset('images/117478-delivery.json')),
-    );
-  }
-
-  Widget helpDetailsWidget() {
-    return Padding(
-      padding: EdgeInsets.all(20.0),
-      child: Row(
+      body:!hasRiderMatched
+      ? Center(child: Lottie.asset('images/117478-delivery.json'))
+      : Column(
         children: [
-          Icon(
-            Icons.person,
-            color: Colors.blue,
-            size: 120.0,
-          ),
-          SizedBox(height: 20.0),
-          Column(
-            children: [
-              Text(
-                "Suman Sahoo",
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                "+91 8144498292",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Color.fromARGB(151, 18, 75, 25),
-                ),
-              ),
-            ],
+          FutureBuilder<Map<String, String>?>(
+            future: _performPathCalculation(context),
+            builder: (BuildContext context,
+                AsyncSnapshot<Map<String, String>?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // While the future is still running, display a loading indicator.
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                // Once the future is complete, check if it has an error or a result.
+                if (snapshot.hasError) {
+                  // If there was an error, display an error message.
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  // If there is data, display the userName and userPhoneNumber.
+                  String userName = snapshot.data!['userName']!;
+                  String userPhoneNumber = snapshot.data!['userPhoneNumber']!;
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Center(
+                      child: Row(
+                        children: [
+                              Icon(
+                                Icons.person,
+                                color: Colors.blue,
+                                size: 120,
+                              ),
+                              SizedBox(height: 20.0),
+                              Column(
+                                children: [
+                                  Text(
+                                    '$userName',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Text(
+                                    '$userPhoneNumber',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                       color: Color.fromARGB(151, 18, 75, 25),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  // If there is no data, display a message indicating that no match was found.
+                  return Center(
+                    child: Text('No match found.'),
+                  );
+                }
+              }
+            },
           ),
         ],
-      ),
+      ) 
     );
   }
 }
