@@ -7,12 +7,12 @@ At HelpCar, we believe in building a community of support and trust, where users
 
 <br>
 
-**MEDICAL TRANSPORTATION HELP :**
+**MEDICAL TRANSPORTATION HELP :**<br>
 The medical transportation help feature of HelpCAR is powered by a sophisticated algorithm that matches the needs of those seeking medical transportation with the nearest helper who is willing to provide assistance. This algorithm takes into account various factors such as location, distance, and urgency, to provide the most suitable match for the user in need. Once a match is made, the helper and the user in need can contact each other directly via the app to coordinate the details of the medical transportation.
 
 To ensure the safety and security of both the helper and the user in need, HelpCAR also provides a rating and review system. This system allows users to rate their experience with the helper, and the helper to rate their experience with the user. This feedback system helps to maintain a high level of quality and trust within the HelpCAR community.
 
-**CARPOOLING :**
+**CARPOOLING :**<br>
 The carpooling feature of HelpCAR allows users to share their ride with other users who are traveling on the same route. This feature helps to reduce traffic congestion, lower transportation costs, and promote a more sustainable mode of transportation. The algorithm used to match riders with drivers takes into account various factors such as location, destination, and travel preferences, to provide the most suitable match for both parties.
 
 To ensure the safety and security of both the rider and the driver, HelpCAR provides a detailed profile system for users. This profile system includes information such as name, age, profile picture, and a brief description. Users can also verify their mobile phone number to increase their trust level within the community.
