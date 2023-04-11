@@ -64,130 +64,132 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
       await userRef.child('paths').remove();
 
       setState(() {
-        _currentLocation = 'N/A';
-        _destination = 'N/A';
-        _time = 'N/A';
+        _currentLocation = 'No data';
+        _destination = 'No data';
+        _time = 'No time set';
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      padding: EdgeInsets.zero,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications,
+  return Container(
+    width: 350,
+    padding: EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      color: Color.fromARGB(255, 226, 223, 223),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.deepOrange,
+              ),
+            ),
+            Text(
+              "CURRENT PATH",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.blue,
+              ),
+            ),
+            SizedBox(
+              width: 50,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                '${_currentLocation ?? "N/A"}',
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
               ),
-              Text(
-                "CURRENT PATH",
+            ),
+            Icon(
+              Icons.arrow_right_alt,
+              size: 50,
+              color: Colors.black,
+            ),
+            Expanded(
+              child: Text(
+                '${_destination ?? "N/A"}',
+                maxLines: 2,
                 style: TextStyle(
-                  fontSize: 23,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500,
-                  color: Colors.blue,
+                  color: Colors.black,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(
-                width: 50,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  '${_currentLocation ?? "N/A"}',
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.arrow_right_alt,
-                size: 50,
-                color: Colors.black,
-              ),
-              Expanded(
-                child: Text(
-                  '${_destination ?? "N/A"}',
-                  maxLines: 2,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            "OUT TIME",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.blue,
             ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "OUT TIME",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.blue,
           ),
-          SizedBox(
-            height: 4,
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Text(
+          '${_time ?? "No time set"}',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+            fontSize: 18,
           ),
-          Text(
-            '${_time ?? "N/A"}',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-              fontSize: 18,
-            ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  _removePath();
-                },
-                icon: Icon(Icons.delete),
-                label: Text('Remove'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
-                  ),
+        ),
+        SizedBox(
+          height: 24,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                _removePath();
+              },
+              icon: Icon(Icons.delete),
+              label: Text('Remove'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+                onPrimary: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
                 ),
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               ),
-              SizedBox(width: 16.0),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+            ),
+            SizedBox(width: 16.0),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
 }

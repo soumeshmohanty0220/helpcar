@@ -136,23 +136,17 @@ class _requesterHomePageState extends State<requesterHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Profile Name",
+                          //Name of the user fetched from firebase
+                          "Your Profile",
                           style: TextStyle(
                               fontSize: 16.0, fontFamily: "Brand Bold"),
                         ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text("Visit Profile"),
                       ],
                     )
                   ]),
                 ),
               ),
               Divider(),
-              SizedBox(
-                height: 12.0,
-              ),
               ListTile(
                 leading: Icon(Icons.person, color: Colors.blue),
                 title: Text(

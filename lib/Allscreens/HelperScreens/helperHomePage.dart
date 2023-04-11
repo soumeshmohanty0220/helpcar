@@ -23,8 +23,8 @@ class _HelperHomePageState extends State<HelperHomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        shadowColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 252, 80, 0),
+        shadowColor: Colors.greenAccent,
+        backgroundColor: Color.fromARGB(255, 253, 110, 44),
         toolbarHeight: 250,
         title: Padding(
           padding: EdgeInsets.all(16),
@@ -76,9 +76,9 @@ class _HelperHomePageState extends State<HelperHomePage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, backgroundColor: Colors.deepOrange,
+                  elevation: 0, backgroundColor: Color.fromARGB(255, 255, 95, 46),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
                 child: const Text(

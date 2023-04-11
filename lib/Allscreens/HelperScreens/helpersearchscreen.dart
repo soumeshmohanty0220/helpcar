@@ -84,53 +84,86 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
     }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 223, 215, 215),
       appBar: AppBar(
         title: const Text('Add Path'),
+        centerTitle: true,
+        backgroundColor: Colors.orangeAccent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            SizedBox(height: 20.0),
+            Text(
+              'Enter Details',
+              style: TextStyle(
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 40.0),
+            TextFormField(
               controller: currentLocationController,
-              decoration: const InputDecoration(
-                labelText: 'Current location',
+              decoration: InputDecoration(
                 hintText: 'Enter your current location',
-                icon: Icon(
+                prefixIcon: Icon(
                   Icons.location_on,
                   color: Colors.blue,
                   size: 30,
                 ),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
-            TextField(
+            SizedBox(height: 20.0),
+            TextFormField(
               controller: destinationController,
-              decoration: const InputDecoration(
-                labelText: 'Destination',
-                hintText: 'Enter your destination location',
-                icon: Icon(
+              decoration: InputDecoration(
+                hintText: 'Enter your destination',
+                prefixIcon: Icon(
                   Icons.location_on,
                   color: Colors.blue,
                   size: 30,
                 ),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
-            TextField(
+            SizedBox(height: 20.0),
+            TextFormField(
               controller: timeController,
-              decoration: const InputDecoration(
-                labelText: 'Time of leaving (hh:mm)',
-                icon: Icon(
-                  Icons.lock_clock,
+              decoration: InputDecoration(
+                hintText: 'Enter the time of leaving',
+                prefixIcon: Icon(
+                  Icons.access_time,
                   color: Colors.blue,
                   size: 30,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
               keyboardType: TextInputType.datetime,
               onTap: () async {
-                // show a time picker when the user taps on the time field
                 TimeOfDay? selectedTime = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.now(),
@@ -146,10 +179,23 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
                 }
               },
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 40.0),
             ElevatedButton(
               onPressed: _savePath,
-              child: const Text('Save'),
+              child: Text(
+                'Save Path',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orangeAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+              ),
             ),
           ],
         ),
