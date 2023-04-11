@@ -6,7 +6,8 @@ With HelpCar, users can share vehicles on the same route through a simple reques
 At HelpCar, we believe in building a community of support and trust, where users can easily connect with each other in times of need. Our platform not only makes transportation easy but also addresses climate change, traffic congestion, and the lack of proper infrastructure in rural areas.
 
 <br>
-**MEDICAL TRANSPORTATION HELP:**
+
+**MEDICAL TRANSPORTATION HELP :**
 The medical transportation help feature of HelpCAR is powered by a sophisticated algorithm that matches the needs of those seeking medical transportation with the nearest helper who is willing to provide assistance. This algorithm takes into account various factors such as location, distance, and urgency, to provide the most suitable match for the user in need. Once a match is made, the helper and the user in need can contact each other directly via the app to coordinate the details of the medical transportation.
 
 To ensure the safety and security of both the helper and the user in need, HelpCAR also provides a rating and review system. This system allows users to rate their experience with the helper, and the helper to rate their experience with the user. This feedback system helps to maintain a high level of quality and trust within the HelpCAR community.
