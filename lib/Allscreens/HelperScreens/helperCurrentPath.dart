@@ -117,7 +117,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 '${_currentLocation ?? "N/A"}',
                 maxLines: 2,
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
@@ -133,7 +133,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 '${_destination ?? "N/A"}',
                 maxLines: 2,
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),

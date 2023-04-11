@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api, avoid_print
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api, avoid_print, prefer_const_constructors, sort_child_properties_last
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -181,7 +181,10 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
             ),
             SizedBox(height: 40.0),
             ElevatedButton(
-              onPressed: _savePath,
+              onPressed: (){
+                _savePath();
+                Navigator.pop(context);
+              },
               child: Text(
                 'Save Path',
                 style: TextStyle(

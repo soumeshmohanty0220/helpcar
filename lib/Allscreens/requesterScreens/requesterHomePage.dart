@@ -130,7 +130,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     Image.asset("images/user_icon.png",
                         height: 65.0, width: 65.0),
                     SizedBox(
-                      width: 16.0,
+                      width: 10.0,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,

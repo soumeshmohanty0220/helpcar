@@ -87,7 +87,6 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
     // Return null if no match was found
     return null;
   }
-
   // Cross product algorithm to check if the user's input locations are on the path
   bool crossProductAlgorithm(
       LatLng pathStartLatLng,
