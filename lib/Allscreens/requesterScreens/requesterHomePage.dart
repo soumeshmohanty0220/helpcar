@@ -299,19 +299,19 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                     children: [
                                       SizedBox(height: 10.0),
                                       Text(
-                                        "Hi there",
+                                        "Hi there !",
                                         style: TextStyle(
-                                          fontSize: 20.0,
+                                          fontSize: 15.0,
                                         ),
                                       ),
                                       Text(
-                                        "Need Help?",
+                                        "Need Help ?",
                                         style: TextStyle(
-                                            fontSize: 15.0,
+                                            fontSize: 25.0,
                                             fontFamily: "Brand Bold"),
                                       ),
                                       SizedBox(
-                                        height: 5.0,
+                                        height: 20.0,
                                       ),
                                       GestureDetector(
                                         onTap: () async {

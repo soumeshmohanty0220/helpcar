@@ -190,12 +190,13 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
               style: ElevatedButton.styleFrom(
                 primary: Color.fromARGB(255, 67, 160, 71),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
                 padding: EdgeInsets.symmetric(vertical: 15.0),
               ),

@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
               Container(
                 height: 250.0,
                 child: Image(
-                  image: AssetImage("images/helpcarlogo.jpg"),
+                  image: AssetImage("images/helpcar.png"),
                   width: 350.0,
                   height: 350.0,
                   alignment: Alignment.bottomCenter,
@@ -43,13 +43,16 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 10.0,
               ),
-              const Text(
-                "Welcome to HelpCAR",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 28.0,
-                    fontFamily: "Brand Bold",
-                    color: Colors.black87),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: const Text(
+                  "Ride to Wellness !",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 28.0,
+                      fontFamily: "Brand Bold",
+                      color: Colors.black87),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.all(20.0),
@@ -125,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20.0,
                               fontFamily: "Brand Bold",
-                              color: Colors.black
+                              color: Colors.white,
                           ),
                         ),
                       ),
@@ -133,13 +136,20 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    TextButton(
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 252, 255, 68),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        minimumSize: const Size(double.infinity, 50.0),
+                      ),
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(context,
                             RegistrationScreen.idScreen, (route) => false);
                       },
                       child: Text(
-                        "Dont't have an account ? Sign Up Here !",
+                        "No Account? Sign Up Here !",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.black,

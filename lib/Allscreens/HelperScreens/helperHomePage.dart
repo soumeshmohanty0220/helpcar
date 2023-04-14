@@ -65,7 +65,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
             ),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 60,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -78,7 +78,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
                 style: ElevatedButton.styleFrom(
                   elevation: 0, backgroundColor: Color.fromARGB(255, 67, 160, 71),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
                 child: const Text(
@@ -86,7 +86,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),

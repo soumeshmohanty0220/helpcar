@@ -67,6 +67,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   return Scaffold(
     appBar: AppBar(
       title: Text('Registration'),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, LoginScreen.idScreen);
+          },
+        ),
     ),
     backgroundColor: Color.fromARGB(255, 206, 238, 235),
     body: SingleChildScrollView(
@@ -83,7 +89,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Image(
-                    image: AssetImage('images/helpcarlogo.jpg'),
+                    image: AssetImage('images/helpcar.png'),
                     width: 350,
                     height: 350,
                     alignment: Alignment.bottomCenter,

@@ -253,35 +253,42 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                   return Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Center(
-                      child: Row(
-                        children: [
-                              Icon(
-                                Icons.person,
-                                color: Colors.blue,
-                                size: 120,
-                              ),
-                              SizedBox(height: 20.0),
-                              Column(
-                                children: [
-                                  Text(
-                                    '$userName',
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
+                      child: Container(
+                        decoration:BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Color.fromARGB(255, 230, 230, 230),
+                        ),
+                        child: Row(
+                          children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.blue,
+                                  size: 120,
+                                ),
+                                // SizedBox(height: 40.0),
+                                Column(
+                                  children: [
+                                    Text(
+                                      '$userName',
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  Text(
-                                    '$userPhoneNumber',
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                       color: Color.fromARGB(151, 18, 75, 25),
+                                    
+                                    SizedBox(height: 22.0),
+                                    Text(
+                                      '(IN) $userPhoneNumber',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold,
+                                         color: Color.fromARGB(148, 1, 36, 0),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                        ],
+                                  ],
+                                ),
+                          ],
+                        ),
                       ),
                     ),
                   );
