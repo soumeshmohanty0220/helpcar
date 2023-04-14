@@ -24,7 +24,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
         automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         shadowColor: Colors.greenAccent,
-        backgroundColor: Color.fromARGB(255, 253, 110, 44),
+        backgroundColor: Color.fromARGB(255, 255, 127, 67),
         toolbarHeight: 250,
         title: Padding(
           padding: EdgeInsets.all(16),
@@ -76,7 +76,7 @@ class _HelperHomePageState extends State<HelperHomePage> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, backgroundColor: Color.fromARGB(255, 255, 95, 46),
+                  elevation: 0, backgroundColor: Color.fromARGB(255, 67, 160, 71),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),

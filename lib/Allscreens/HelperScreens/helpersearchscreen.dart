@@ -87,11 +87,11 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 223, 215, 215),
+      backgroundColor: Color.fromARGB(255, 206, 238, 235),
       appBar: AppBar(
         title: const Text('Add Path'),
         centerTitle: true,
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.orange,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
       ),
@@ -193,7 +193,7 @@ class _CurrentPathPageState extends State<CurrentPathPage> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.orangeAccent,
+                primary: Color.fromARGB(255, 67, 160, 71),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50.0),
                 ),

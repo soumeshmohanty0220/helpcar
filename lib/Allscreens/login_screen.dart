@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // ignore: prefer_const_constructors
-      backgroundColor: Color.fromARGB(255, 95, 196, 174),
+      backgroundColor: Color.fromARGB(255, 166, 235, 228),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(8.0),
@@ -100,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Color.fromARGB(255, 67, 160, 71),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -116,12 +118,16 @@ class LoginScreen extends StatelessWidget {
                           loginAndAuthenticateUser(context);
                         }
                       },
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: "Brand Bold",
-                            color: Colors.black),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: "Brand Bold",
+                              color: Colors.black
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(

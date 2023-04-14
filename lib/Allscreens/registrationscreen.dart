@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, sort_child_properties_last, prefer_const_constructors
 
 import 'dart:convert';
 
@@ -64,20 +64,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Registration'),
-      ),
-      body: Padding(
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Registration'),
+    ),
+    backgroundColor: Color.fromARGB(255, 206, 238, 235),
+    body: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 5),
+              Container(
+                height: 230,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Image(
+                    image: AssetImage('images/helpcarlogo.jpg'),
+                    width: 350,
+                    height: 350,
+                    alignment: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Enter your name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter your name';
@@ -85,9 +108,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Enter Email ID',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter your email';
@@ -98,9 +129,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: _phoneController,
-                decoration: InputDecoration(labelText: 'Phone'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Enter Phone number',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter your phone number';
@@ -108,9 +147,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelText: 'Enter Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
                 obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -122,15 +169,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: Text('Register'),
+              SizedBox(height: 32),
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _submitForm,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xFF43A047),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
