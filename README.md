@@ -8,8 +8,6 @@ The problem HelpCAR addresses is the lack of accessible and affordable transport
 
 Our application allows volunteer drivers to add their travel details, including their source, destination, and time of travel, and also allows patients to search for active helpers in their area. The app's algorithm matches patients with the closest volunteer driver, ensuring timely access to medical facilities. The user-friendly and accessible nature of the app makes it easy for both helpers and patients to use, promoting volunteerism and community building while improving access to medical care.
 
-HelpCAR was developed using modern technologies such as Firebase Real Time Database, Google Maps SDK, and a Virtual Machine running on Google Cloud Servers powered by an AMD EPYC Chip. These technologies were chosen for their reliability, scalability, and ability to handle real-time data.
-
 Overall, HelpCAR aims to make a tangible impact in the lives of people in need by promoting volunteerism, community building, and improving access to medical care. With the potential to expand to other underserved areas and offer more services in the future, HelpCAR has the potential to significantly improve the lives of those who need it most.
 
 ## Proposed Solution
@@ -35,27 +33,6 @@ The app's algorithm performs a swift search for active helpers within the user's
 ### Carpooling
 
 Users in urban and semi-urban areas can also use these features to carpool with others, which not only reduces traffic congestion and air pollution but also helps in conserving fuel. This positive impact on the environment can benefit everyone in the community.
-
-### Technologies Used
-
-We have implemented this feature using the Google Maps SDK and Firebase Real-Time Database. The algorithm runs on a Virtual Machine on Google Cloud Servers powered by an AMD EPYC Chip. These modern and reliable technologies ensure that our app is efficient, scalable, and can handle real-time data.
-
-By promoting volunteerism, community building, and improving access to medical care, HelpCAR is making a tangible impact in the lives of people in need. It is a user-friendly and accessible solution to a pressing societal problem, and we hope to continue making a positive impact in the future.
-
-## Tech Stacks and Tools
-
-1. Flutter
-2. Google Maps SDK
-3. Google Cloud
-4. AMD Virtual Machine
-5. Firebase Authentication and Real Time Database
-6. GitHub
-
-## Challenges Faced
-
-1. Developing the algorithm for matching users with suitable helpers.
-2. Real-time data handling.
-3. Running the app on an AMD Virtual Machine.
 
 ## How to install and run the project?
 
