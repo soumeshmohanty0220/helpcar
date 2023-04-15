@@ -59,5 +59,31 @@ By promoting volunteerism, community building, and improving access to medical c
 
 ## How to install and run the project?
 
-1.
-2.
+Step 1 :
+Clone the repository to your local machine:
+```
+git clone https://github.com/soumeshmohanty0220/helpcar.git
+```
+
+Step 2 :
+Make sure you have Flutter installed on your machine. You can download it from the official Flutter website: 
+```
+https://flutter.dev/docs/get-started/install
+```
+Step 3 :
+Open the project in your preferred editor.
+
+Step 4 : 
+Run the following command in your terminal to download the required packages:
+```
+flutter pub get 
+```
+
+Step 5 :
+Connect your device or start an emulator.If you are using an android emulator please make sure you are using the emulator which has Google Play Sevices available in it. Otherwise if you are using your device, please ensure to turn ON USB debugging mode.
+
+Step 6 :
+Run the following command to build and launch the app:
+```
+flutter run
+```
