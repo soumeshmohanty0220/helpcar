@@ -36,7 +36,7 @@ Users in urban and semi-urban areas can also use these features to carpool with 
 
 ## How to install and run the project?
 
-You can downloaD the APK from the following [link](https://drive.google.com/drive/folders/1KSDa2PtwqXM12ES4fZ4qbFHjx8Q8YczG?usp=sharing)
+### You can download the APK from the following [LINK](https://drive.google.com/drive/folders/1KSDa2PtwqXM12ES4fZ4qbFHjx8Q8YczG?usp=sharing)
 
 ### OR
 
