@@ -38,7 +38,7 @@ Users in urban and semi-urban areas can also use these features to carpool with 
 
 You can downloaD the APK from the following [link](https://drive.google.com/drive/folders/1KSDa2PtwqXM12ES4fZ4qbFHjx8Q8YczG?usp=sharing)
 
-###OR
+### OR
 
 Step 1 :
 Clone the repository to your local machine:
