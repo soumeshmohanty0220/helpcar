@@ -2,5 +2,7 @@
     "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter",
     "search.useGlobalIgnoreFiles": true,
     "search.useParentIgnoreFiles": true,
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "debug.console.fontSize": 12,
+    "editor.fontSize": 12
 }
