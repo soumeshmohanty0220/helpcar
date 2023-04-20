@@ -2,6 +2,11 @@
 
 ## Project Description
 
+
+<p align="center">
+<a href="https://www.youtube.com/watch?v=YZ0t5t16yvY"><img src = "https://img.shields.io/badge/Watch on YouTube-Page?style=flat&logo=youtube&logoColor=white&color=FE0100" height = 30px></a>
+</p>
+
 HelpCAR is a mobile application designed to provide medical transport assistance to people living in rural and remote areas. The app connects volunteer helpers with patients who need assistance in getting to medical facilities. HelpCAR uses advanced algorithms and Google Maps SDK to efficiently match helpers with patients based on their location and travel details. Additionally, the app offers a carpooling feature for urban and semi-urban users, reducing environmental impact while promoting community building.
 
 The problem HelpCAR addresses is the lack of accessible and affordable transportation in rural and remote areas, which can lead to delayed or missed medical appointments and lower chances of survival for patients. HelpCAR aims to bridge this gap by leveraging technology to connect helpers and patients efficiently and quickly.
