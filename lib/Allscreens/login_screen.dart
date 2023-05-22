@@ -15,13 +15,12 @@ class LoginScreen extends StatelessWidget {
 
   static String idScreen = "login";
 
-  TextEditingController emailTextEditingController = TextEditingController();
-  TextEditingController passwordTextEditingController = TextEditingController();
+  final TextEditingController emailTextEditingController = TextEditingController();
+  final TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ignore: prefer_const_constructors
       backgroundColor: Color.fromARGB(255, 166, 235, 228),
       body: SingleChildScrollView(
         child: Padding(

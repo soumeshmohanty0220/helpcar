@@ -2,10 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 
 class HelperCurrentPath extends StatefulWidget {
   const HelperCurrentPath({Key? key}) : super(key: key);
@@ -15,7 +12,6 @@ class HelperCurrentPath extends StatefulWidget {
 }
 
 class _HelperCurrentPathState extends State<HelperCurrentPath> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
 
   String? _currentLocation;

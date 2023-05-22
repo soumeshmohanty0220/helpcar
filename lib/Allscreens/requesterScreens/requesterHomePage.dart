@@ -15,7 +15,6 @@ import '../../AllWidgets/progressdialog.dart';
 import '../../AllWidgets/requesterRideDetails.dart';
 import '../../Assistants/assistantmethods.dart';
 import '../../DataHandler/appData.dart';
-import '../../Models/address.dart';
 import '../../searchScreen.dart';
 import '../HelperScreens/helperHomePage.dart';
 import '../login_screen.dart';
