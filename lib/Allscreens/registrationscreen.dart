@@ -10,6 +10,8 @@ import 'login_screen.dart';
 class RegistrationScreen extends StatefulWidget {
   //Define id screen
   static const String idScreen = "register";
+
+  const RegistrationScreen({super.key});
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -84,7 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 5),
-                Container(
+                SizedBox(
                   height: 230,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),

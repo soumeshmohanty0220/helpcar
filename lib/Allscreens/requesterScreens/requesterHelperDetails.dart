@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -268,7 +267,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                                 Column(
                                   children: [
                                     Text(
-                                      '$userName',
+                                      userName,
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,

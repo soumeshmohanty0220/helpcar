@@ -15,7 +15,7 @@ class HelperHomePage extends StatefulWidget {
 }
 
 class _HelperHomePageState extends State<HelperHomePage> {
-  int _selectedButtonIndex = 0;
+  final int _selectedButtonIndex = 0;
 
   @override
   Widget build(BuildContext context) {

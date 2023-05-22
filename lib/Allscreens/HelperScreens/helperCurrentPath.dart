@@ -25,11 +25,11 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
   }
 
   Future<void> _fetchPath() async {
-    final DatabaseReference _database = FirebaseDatabase.instance.reference();
+    final DatabaseReference database = FirebaseDatabase.instance.reference();
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      DatabaseReference userRef = _database.child('users').child(user.uid);
+      DatabaseReference userRef = database.child('users').child(user.uid);
 
       // Update data in realtime
       userRef.child('paths').onValue.listen((event) {
