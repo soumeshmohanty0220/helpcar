@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:helpcar/Allscreens/HelperScreens/requester_details_page.dart';
 
 class HelperCurrentPath extends StatefulWidget {
   const HelperCurrentPath({Key? key}) : super(key: key);
@@ -243,17 +244,36 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
           ),
           SizedBox(height: 40),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton.icon(
                 onPressed: _removePath,
                 icon: Icon(Icons.delete),
-                label: Text('Remove'),
+                label: Text('Remove Path'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RequesterDetailsPage()),
+                  );
+                },
+                icon: Icon(Icons.add),
+                label: Text('Requested'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
