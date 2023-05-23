@@ -33,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final phone = _phoneController.text.trim();
     final password = _passwordController.text;
 
-    final url = Uri.parse('http://34.122.84.107:8080/register');
+    final url = Uri.parse('http://104.155.190.211:8080/register');
 
     try {
       final response = await http.post(

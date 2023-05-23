@@ -88,6 +88,7 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       child: TextField(
+                        obscureText: true,
                         controller: passwordTextEditingController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
