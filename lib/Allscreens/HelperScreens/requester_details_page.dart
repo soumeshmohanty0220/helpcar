@@ -10,67 +10,73 @@ class RequesterDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Requester Details'),
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
-                  blurRadius: 10,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Name',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context);
+          return false;
+        },
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.4),
+                    blurRadius: 10,
+                    offset: Offset(0, 2),
                   ),
-                ),
-                SizedBox(height: 8),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter name',
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Name',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Contact',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                  SizedBox(height: 8),
+                  TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter name',
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter contact',
+                  SizedBox(height: 16),
+                  Text(
+                    'Contact',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target:
-                    LatLng(37.4219999, -122.0840575), // Set initial location
-                zoom: 15,
+                  SizedBox(height: 8),
+                  TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter contact',
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: const GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target:
+                      LatLng(37.4219999, -122.0840575), // Set initial location
+                  zoom: 15,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

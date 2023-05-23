@@ -100,18 +100,22 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 Text(
                   "CURRENT PATH",
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.black,
                   ),
                 ),
                 Icon(
                   Icons.more_vert,
-                  color: Colors.white,
+                  color: Colors.red,
                   size: 30,
                 ),
               ],
             ),
+          ),
+          Divider(
+            thickness: 1,
+            color: Colors.black,
           ),
           Row(
             children: [
@@ -134,26 +138,26 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
             ],
           ),
           SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+          TextField(
+            controller:
+                TextEditingController(text: _currentLocation ?? "No Data"),
+            readOnly: true,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
             ),
-            child: Row(
-              children: [
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    _currentLocation ?? "No Data",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.grey[200],
+              contentPadding: EdgeInsets.all(12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              hintText: "No Data",
+              hintStyle: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+              ),
             ),
           ),
           SizedBox(height: 16),
@@ -178,26 +182,26 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
             ],
           ),
           SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+          TextField(
+            controller:
+                TextEditingController(text: _currentLocation ?? "No Data"),
+            readOnly: true,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
             ),
-            child: Row(
-              children: [
-                SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    _destination ?? "No Data",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.grey[200],
+              contentPadding: EdgeInsets.all(12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              hintText: "No Data",
+              hintStyle: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+              ),
             ),
           ),
           SizedBox(height: 16),
@@ -222,60 +226,67 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
             ],
           ),
           SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
+          TextField(
+            controller:
+                TextEditingController(text: _currentLocation ?? "No Data"),
+            readOnly: true,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
             ),
-            child: Row(
-              children: [
-                SizedBox(width: 8),
-                Text(
-                  _time ?? "No Time Set",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-              ],
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.grey[200],
+              contentPadding: EdgeInsets.all(12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              hintText: "No Data",
+              hintStyle: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+              ),
             ),
           ),
           SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
-                onPressed: _removePath,
-                icon: Icon(Icons.delete),
-                label: Text('Remove Path'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: _removePath,
+                  icon: Icon(Icons.delete),
+                  label: Text('Remove Path'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 59, 59, 59),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RequesterDetailsPage()),
-                  );
-                },
-                icon: Icon(Icons.add),
-                label: Text('Requested'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RequesterDetailsPage()),
+                    );
+                  },
+                  icon: Icon(Icons.add),
+                  label: Text('Requested'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 59, 59, 59),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
             ],
