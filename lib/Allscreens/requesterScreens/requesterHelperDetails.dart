@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class requesterHelperDetails extends StatefulWidget {
   const requesterHelperDetails({super.key});
@@ -47,12 +46,16 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
   void _drawPolyline() {
     Polyline polyline = Polyline(
       polylineId: PolylineId('route'),
-      color: Colors.blue,
-      width: 5,
+      color: Colors.black,
+      jointType: JointType.round,
+      width: 3,
       points: [
         LatLng(startLatitude, startLongitude),
         LatLng(endLatitude, endLongitude),
       ],
+      startCap: Cap.roundCap,
+      endCap: Cap.roundCap,
+      geodesic: true,
     );
 
     setState(() {
@@ -93,7 +96,6 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
           // Perform ray casting algorithm to check if the user's input locations are on the path
           if (crossProductAlgorithm(pathStartLatLng, pathDestinationLatLng,
               startLatLng, destinationLatLng)) {
-
             var id = await getIdsByValue(values, value);
             final User? user = _auth.currentUser;
             print(id);
@@ -295,193 +297,272 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
           ],
         ),
       ),
-      body: !hasRiderMatched
-          ? Center(child: Lottie.asset('images/117478-delivery.json'))
-          : Column(
-              children: [
-                Expanded(
-                  child: FutureBuilder<Map<String, String>?>(
-                    future: _performPathCalculation(context),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Map<String, String>?> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        // While the future is still running, display a loading indicator.
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        // Once the future is complete, check if it has an error or a result.
-                        if (snapshot.hasError) {
-                          // If there was an error, display an error message.
-                          return Center(
-                            child: Text('Error: ${snapshot.error}'),
-                          );
-                        } else if (snapshot.hasData && snapshot.data != null) {
-                          // If there is data, display the userName and userPhoneNumber.
-                          String userName = snapshot.data!['userName']!;
-                          String userPhoneNumber =
-                              snapshot.data!['userPhoneNumber']!;
-                          return Container(
-                            padding: EdgeInsets.all(20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 120.0,
-                                  height: 120.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.blue,
-                                  ),
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 80,
-                                  ),
-                                ),
-                                SizedBox(width: 20.0),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        userName,
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10.0),
-                                      Text(
-                                        '(IN) $userPhoneNumber',
-                                        style: TextStyle(
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(148, 1, 36, 0),
-                                        ),
-                                      ),
-                                      SizedBox(height: 20.0),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                FlutterPhoneDirectCaller
-                                                    .callNumber(
-                                                        userPhoneNumber);
-                                              },
-                                              child: Text(
-                                                'Contact',
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.blue,
-                                                onPrimary: Colors.white,
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical: 15.0,
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: 10.0),
-                                          Expanded(
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                deleteID();
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                'Cancel',
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.red,
-                                                onPrimary: Colors.white,
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical: 15.0,
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          // If there is no data, display a message indicating that no match was found.
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.car_crash,
-                                    color: Colors.red,
-                                    size: 80,
-                                  ),
-                                  Text(
-                                    'No match found!',
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 20.0),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),
+      body: WillPopScope(
+        onWillPop: () async {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Cancel Ride'),
+              content: const Text('Are you sure to cancel the ride ?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => {
+                    Navigator.pop(context),
+                  },
+                  child: const Text('Cancel'),
                 ),
-                Container(
-                  height: 450,
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                          37.4219999, -122.0840575), // Set initial location
-                      zoom: 15,
-                    ),
-                    polylines: _polylines,
-                  ),
+                TextButton(
+                  onPressed: () => {
+                    deleteID(),
+                    Navigator.pop(context),
+                    Navigator.pop(context),
+                  },
+                  child: const Text('OK'),
                 ),
               ],
             ),
+          );
+
+          return false;
+        },
+        child: !hasRiderMatched
+            ? Center(child: Lottie.asset('images/117478-delivery.json'))
+            : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      child: FutureBuilder<Map<String, String>?>(
+                        future: _performPathCalculation(context),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Map<String, String>?> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // While the future is still running, display a loading indicator.
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            // Once the future is complete, check if it has an error or a result.
+                            if (snapshot.hasError) {
+                              // If there was an error, display an error message.
+                              return Center(
+                                child: Text('Error: ${snapshot.error}'),
+                              );
+                            } else if (snapshot.hasData &&
+                                snapshot.data != null) {
+                              // If there is data, display the userName and userPhoneNumber.
+                              String userName = snapshot.data!['userName']!;
+                              String userPhoneNumber =
+                                  snapshot.data!['userPhoneNumber']!;
+                              return Container(
+                                // height:100,
+                                padding: EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color:
+                                      const Color.fromARGB(255, 126, 126, 126),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 120.0,
+                                      height: 120.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.blue,
+                                      ),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                        size: 80,
+                                      ),
+                                    ),
+                                    SizedBox(width: 20.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            userName,
+                                            style: TextStyle(
+                                              fontSize: 24.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10.0),
+                                          Text(
+                                            '(IN) $userPhoneNumber',
+                                            style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  Color.fromARGB(148, 1, 36, 0),
+                                            ),
+                                          ),
+                                          SizedBox(height: 20.0),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    FlutterPhoneDirectCaller
+                                                        .callNumber(
+                                                            userPhoneNumber);
+                                                  },
+                                                  child: Text(
+                                                    'Contact',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: Colors.black,
+                                                    onPrimary: Colors.white,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 15.0,
+                                                    ),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.0),
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () =>
+                                                      showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      title: const Text(
+                                                          'Cancel Ride'),
+                                                      content: const Text(
+                                                          'Are you sure to cancel the ride ?'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () => {
+                                                            Navigator.pop(
+                                                                context),
+                                                          },
+                                                          child: const Text(
+                                                              'Cancel'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () => {
+                                                            deleteID(),
+                                                            Navigator.pop(
+                                                                context),
+                                                            Navigator.pop(
+                                                                context),
+                                                          },
+                                                          child:
+                                                              const Text('OK'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  //deleteID();
+
+                                                  //   Navigator.pop(context);
+                                                  // },
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary: Colors.black,
+                                                    onPrimary: Colors.white,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 15.0,
+                                                    ),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              // If there is no data, display a message indicating that no match was found.
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.car_crash,
+                                        color: Colors.red,
+                                        size: 80,
+                                      ),
+                                      Text(
+                                        'No match found!',
+                                        style: TextStyle(
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 20.0),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: 200,
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                              37.4219999, -122.0840575), // Set initial location
+                          zoom: 15,
+                        ),
+                        polylines: _polylines,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 }

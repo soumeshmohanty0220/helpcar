@@ -16,7 +16,7 @@ import '../../AllWidgets/progressdialog.dart';
 import '../../AllWidgets/requesterRideDetails.dart';
 import '../../Assistants/assistantmethods.dart';
 import '../../DataHandler/appData.dart';
-import '../../searchScreen.dart';
+import '../../AllWidgets/searchScreen.dart';
 import '../HelperScreens/helperHomePage.dart';
 import '../login_screen.dart';
 
@@ -405,6 +405,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                     ],
                                   )),
                             )),
+                
                 ],
               ),
       ),
