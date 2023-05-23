@@ -447,11 +447,11 @@ class _requesterHomePageState extends State<requesterHomePage> {
     polylineSet.clear();
     setState(() {
       Polyline polyline = Polyline(
-        color: Colors.red,
+        color: Colors.black,
         polylineId: PolylineId("PolylineID"),
         jointType: JointType.round,
         points: pLineCoordinates,
-        width: 5,
+        width: 3,
         startCap: Cap.roundCap,
         endCap: Cap.roundCap,
         geodesic: true,
@@ -496,22 +496,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       infoWindow:
           InfoWindow(title: finalPos.placeName, snippet: "Drop Off Location"),
-    );
-    Circle pickUpCircle = Circle(
-      fillColor: Colors.blueAccent,
-      center: pickUpLatLng,
-      radius: 12,
-      strokeWidth: 4,
-      strokeColor: Colors.blueAccent,
-      circleId: CircleId("pickUpId"),
-    );
-    Circle dropOffCircle = Circle(
-      fillColor: Colors.deepPurple,
-      center: dropOffLatLng,
-      radius: 12,
-      strokeWidth: 4,
-      strokeColor: Colors.deepPurple,
-      circleId: CircleId("dropOffId"),
     );
 
     setState(() {

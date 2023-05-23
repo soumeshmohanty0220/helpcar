@@ -8,7 +8,6 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class requesterHelperDetails extends StatefulWidget {
   const requesterHelperDetails({super.key});

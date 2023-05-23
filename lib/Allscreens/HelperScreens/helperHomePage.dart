@@ -27,7 +27,7 @@ class _HelperHomePageState extends State<HelperHomePage>
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: Interval(0.0, 0.8, curve: Curves.easeIn),
+        curve: const Interval(0.0, 0.8, curve: Curves.easeIn),
       ),
     );
 
@@ -48,7 +48,7 @@ class _HelperHomePageState extends State<HelperHomePage>
         automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         shadowColor: const Color.fromARGB(255, 0, 0, 0),
-        backgroundColor: Color.fromARGB(255, 255, 127, 67),
+        backgroundColor: const Color.fromARGB(255, 255, 127, 67),
         toolbarHeight: 250,
         title: Stack(
           children: [
@@ -57,7 +57,7 @@ class _HelperHomePageState extends State<HelperHomePage>
               child: Container(
                 width: double.infinity,
                 height: 250,
-                color: Color.fromARGB(255, 255, 127, 67),
+                color: const Color.fromARGB(255, 255, 127, 67),
                 child: Lottie.asset(
                   'assets/delivery-boy.json',
                   fit: BoxFit.cover,
@@ -65,29 +65,29 @@ class _HelperHomePageState extends State<HelperHomePage>
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   FadeTransition(
                     opacity: _fadeAnimation,
-                    child: Text(
+                    child: const Text(
                       "Hey Helper !",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                         fontSize: 40.0,
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   FadeTransition(
                     opacity: _fadeAnimation,
-                    child: Text(
+                    child: const Text(
                       "Add your way",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                         fontSize: 25.0,
@@ -104,8 +104,8 @@ class _HelperHomePageState extends State<HelperHomePage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
               child: HelperCurrentPath(),
             ),
             SizedBox(
@@ -140,7 +140,7 @@ class _HelperHomePageState extends State<HelperHomePage>
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

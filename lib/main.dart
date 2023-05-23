@@ -73,8 +73,8 @@ class _MyAppState extends State<MyApp> {
           fontFamily: "Brand Bold",
           primarySwatch: Colors.orange,
         ),
-        // initialRoute: isLogin? requesterHomePage.idScreen : LoginScreen.idScreen,
-        initialRoute: requesterHomePage.idScreen,
+        initialRoute: isLogin? requesterHomePage.idScreen : LoginScreen.idScreen,
+        // initialRoute: requesterHomePage.idScreen,
         routes: {
           RegistrationScreen.idScreen: (context) => RegistrationScreen(),
           LoginScreen.idScreen: (context) => LoginScreen(),

@@ -77,7 +77,12 @@ class _requestRideDetailsState extends State<requestRideDetails> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Divider(color: Colors.black,indent: 0, thickness: 0,height: 0,),
+                      Divider(
+                        color: Colors.black,
+                        indent: 0,
+                        thickness: 0,
+                        height: 0,
+                      ),
                       Flexible(
                         child: Text(
                           widget.loc2,
