@@ -37,7 +37,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
   Set<Polyline> polylineSet = {};
 
   Set<Marker> markersSet = {};
-  Set<Circle> circlesSet = {};
 
   // ignore: prefer_final_fields, unused_field
   Completer<GoogleMapController> _controller = Completer();
@@ -136,7 +135,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     currentPageState = 1;
                     polylineSet.clear();
                     markersSet.clear();
-                    circlesSet.clear();
 
                     mapController
                         .animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
@@ -249,7 +247,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
 
               polylineSet.clear();
               markersSet.clear();
-              circlesSet.clear();
               mapController
                   .animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
             });
@@ -273,7 +270,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
                     myLocationButtonEnabled: true,
                     polylines: polylineSet,
                     markers: markersSet,
-                    circles: circlesSet,
                   ),
                   Positioned(
                       left: 10.0,
@@ -521,8 +517,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
     setState(() {
       markersSet.add(pickUpMarker);
       markersSet.add(dropOffMarker);
-      circlesSet.add(pickUpCircle);
-      circlesSet.add(dropOffCircle);
     });
   }
 }
