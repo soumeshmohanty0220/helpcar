@@ -39,4 +39,10 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyC8VZaPR5Hpf5po7MdL25UY9At7vDDl2kc"/>
     </application>
+  <queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tel" />
+    </intent>
+  </queries>
 </manifest>

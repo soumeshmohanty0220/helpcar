@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, sort_child_properties_last
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:helpcar/DataHandler/appData.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class requesterHelperDetails extends StatefulWidget {
   const requesterHelperDetails({super.key});
@@ -85,6 +87,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
     // Return null if no match was found
     return null;
   }
+
   // Cross product algorithm to check if the user's input locations are on the path
   bool crossProductAlgorithm(
       LatLng pathStartLatLng,
@@ -144,180 +147,258 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        shadowColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 0, 224, 206),
-        toolbarHeight: 250,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Your ",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 25.0,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          shadowColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 0, 224, 206),
+          toolbarHeight: 250,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Your ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 25.0,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      (hasRiderMatched)
-                          ? Text(
-                              "RIDE",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40.0,
+                  SizedBox(
+                    height: 100,
+                    width: 200,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        (hasRiderMatched)
+                            ? Text(
+                                "RIDE",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 40.0,
+                                ),
+                              )
+                            : AnimatedTextKit(
+                                repeatForever: true,
+                                animatedTexts: [
+                                  RotateAnimatedText(
+                                    'HELPER',
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30.0,
+                                    ),
+                                  ),
+                                  RotateAnimatedText(
+                                    'RIDER',
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30.0,
+                                    ),
+                                  ),
+                                  RotateAnimatedText(
+                                    'DRIVER',
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30.0,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                          : AnimatedTextKit(
-                              repeatForever: true,
-                              animatedTexts: [
-                                RotateAnimatedText(
-                                  'HELPER',
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30.0,
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                "is On the Way",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: !hasRiderMatched
+            ? Center(child: Lottie.asset('images/117478-delivery.json'))
+            : Column(
+                children: [
+                  FutureBuilder<Map<String, String>?>(
+                    future: _performPathCalculation(context),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Map<String, String>?> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // While the future is still running, display a loading indicator.
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        // Once the future is complete, check if it has an error or a result.
+                        if (snapshot.hasError) {
+                          // If there was an error, display an error message.
+                          return Center(
+                            child: Text('Error: ${snapshot.error}'),
+                          );
+                        } else if (snapshot.hasData && snapshot.data != null) {
+                          // If there is data, display the userName and userPhoneNumber.
+                          String userName = snapshot.data!['userName']!;
+                          String userPhoneNumber =
+                              snapshot.data!['userPhoneNumber']!;
+                          return Container(
+                            padding: EdgeInsets.all(20.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 120.0,
+                                  height: 120.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.blue,
+                                  ),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 80,
                                   ),
                                 ),
-                                RotateAnimatedText(
-                                  'RIDER',
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30.0,
-                                  ),
-                                ),
-                                RotateAnimatedText(
-                                  'DRIVER',
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30.0,
+                                SizedBox(width: 20.0),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        userName,
+                                        style: TextStyle(
+                                          fontSize: 24.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        '(IN) $userPhoneNumber',
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(148, 1, 36, 0),
+                                        ),
+                                      ),
+                                      SizedBox(height: 20.0),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                FlutterPhoneDirectCaller
+                                                    .callNumber(
+                                                        userPhoneNumber);
+                                              },
+                                              child: Text(
+                                                'Contact',
+                                                style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.blue,
+                                                onPrimary: Colors.white,
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 15.0,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10.0),
+                                          Expanded(
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Add your action here
+                                              },
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.red,
+                                                onPrimary: Colors.white,
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 15.0,
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                    ],
+                          );
+                        } else {
+                          // If there is no data, display a message indicating that no match was found.
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.car_crash,
+                                    color: Colors.red,
+                                    size: 80,
+                                  ),
+                                  Text(
+                                    'No match found!',
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    },
                   ),
-                ),
-              ],
-            ),
-            Text(
-              "is On the Way",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 40.0,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body:!hasRiderMatched
-      ? Center(child: Lottie.asset('images/117478-delivery.json'))
-      : Column(
-        children: [
-          FutureBuilder<Map<String, String>?>(
-            future: _performPathCalculation(context),
-            builder: (BuildContext context,
-                AsyncSnapshot<Map<String, String>?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // While the future is still running, display a loading indicator.
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                // Once the future is complete, check if it has an error or a result.
-                if (snapshot.hasError) {
-                  // If there was an error, display an error message.
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else if (snapshot.hasData && snapshot.data != null) {
-                  // If there is data, display the userName and userPhoneNumber.
-                  String userName = snapshot.data!['userName']!;
-                  String userPhoneNumber = snapshot.data!['userPhoneNumber']!;
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Center(
-                      child: Container(
-                        decoration:BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Color.fromARGB(255, 230, 230, 230),
-                        ),
-                        child: Row(
-                          children: [
-                                Icon(
-                                  Icons.person,
-                                  color: Colors.blue,
-                                  size: 120,
-                                ),
-                                // SizedBox(height: 40.0),
-                                Column(
-                                  children: [
-                                    Text(
-                                      userName,
-                                      style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    
-                                    SizedBox(height: 22.0),
-                                    Text(
-                                      '(IN) $userPhoneNumber',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                         color: Color.fromARGB(148, 1, 36, 0),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                } else {
-                  // If there is no data, display a message indicating that no match was found.
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.car_crash,
-                            color: Colors.red,
-                            size: 80,
-                          ),
-                          Text('No match found!',
-                              style: TextStyle(
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          SizedBox(height: 20.0),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-              }
-            },
-          ),
-        ],
-      ) 
-    );
+                ],
+              ));
   }
 }

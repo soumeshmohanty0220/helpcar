@@ -146,7 +146,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                   child: Text(
                     _currentLocation ?? "No Data",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
@@ -190,7 +190,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                   child: Text(
                     _destination ?? "No Data",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
@@ -233,7 +233,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 Text(
                   _time ?? "No Time Set",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
                   ),
