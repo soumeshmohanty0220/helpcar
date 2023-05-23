@@ -28,34 +28,33 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var auth=FirebaseAuth.instance;
+  var auth = FirebaseAuth.instance;
   var isLogin;
 
-checkiflogin() async {
-  FirebaseAuth.instance.authStateChanges().listen((user) {
-    if (user == null) {
-      print('User is currently signed out!');
+  checkiflogin() async {
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+        print('User is currently signed out!');
+        setState(() {
+          isLogin = false;
+        });
+      } else {
+        print('User is signed in!');
+        setState(() {
+          isLogin = true;
+        });
+      }
+    });
+    if (auth.currentUser == null) {
       setState(() {
         isLogin = false;
       });
     } else {
-      print('User is signed in!');
       setState(() {
-        isLogin = true; 
+        isLogin = true;
       });
     }
-  });
-  if (auth.currentUser == null) {
-    setState(() {
-      isLogin = false;
-    });
-  } else {
-    setState(() {
-      isLogin = true;
-    });
   }
-}
-
 
   @override
   void initState() {
@@ -63,7 +62,6 @@ checkiflogin() async {
     checkiflogin();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +73,8 @@ checkiflogin() async {
           fontFamily: "Brand Bold",
           primarySwatch: Colors.orange,
         ),
-        initialRoute: isLogin? requesterHomePage.idScreen : LoginScreen.idScreen,
+        // initialRoute: isLogin? requesterHomePage.idScreen : LoginScreen.idScreen,
+        initialRoute: requesterHomePage.idScreen,
         routes: {
           RegistrationScreen.idScreen: (context) => RegistrationScreen(),
           LoginScreen.idScreen: (context) => LoginScreen(),

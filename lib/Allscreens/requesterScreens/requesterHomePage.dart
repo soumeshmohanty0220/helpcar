@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,7 +30,7 @@ class requesterHomePage extends StatefulWidget {
 
 class _requesterHomePageState extends State<requesterHomePage> {
   static var currentPageState = 1;
-  DirectionDetails? details;
+  DirectionDetails? Details;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<LatLng> pLineCoordinates = [];
@@ -100,9 +101,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
       _currentAddress = address;
     });
     mapController.animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
-//         setState(() {
-//           String currentaddress = address;
-// });
 
     print("This is your address :: $address");
   }
@@ -112,7 +110,45 @@ class _requesterHomePageState extends State<requesterHomePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text("HelpCAR"),
+        toolbarHeight: 70,
+        title: Text(
+          "HelpCAR",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+            color: Colors.black,
+          ),
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            if (currentPageState == 1) {
+              return IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            } else if (currentPageState == 2) {
+              return IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  setState(() {
+                    currentPageState = 1;
+                    polylineSet.clear();
+                    markersSet.clear();
+                    circlesSet.clear();
+
+                    mapController
+                        .animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
+                  });
+                  // _onMapCreated(_controller as GoogleMapController);
+                },
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
       ),
       drawer: Container(
         color: Color.fromARGB(255, 166, 235, 228),
@@ -205,105 +241,70 @@ class _requesterHomePageState extends State<requesterHomePage> {
           ),
         ),
       ),
+      body: WillPopScope(
+        onWillPop: () async {
+          if (currentPageState == 2) {
+            setState(() {
+              currentPageState = 1;
 
-      // ignore: unnecessary_null_comparison
-      body: _center == LatLng(0, 0)
-          ? Center(child: CircularProgressIndicator())
-          : Stack(
-              children: [
-                GoogleMap(
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: _center,
-                    zoom: 15.0,
-                  ),
-                  myLocationEnabled: true,
-                  polylines: polylineSet,
-                  markers: markersSet,
-                  circles: circlesSet,
-                ),
-                Positioned(
-                  top: 0.0,
-                  left: 0.0,
-                  child: GestureDetector(
-                    onTap: () {
-                      scaffoldKey.currentState!.openDrawer();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(22.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 3.0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
-                          ),
-                        ],
-                      ),
+              polylineSet.clear();
+              markersSet.clear();
+              circlesSet.clear();
+              mapController
+                  .animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
+            });
+          } else {
+            SystemNavigator.pop();
+          }
+
+          return false;
+        },
+        child: _center == LatLng(0, 0)
+            ? Center(child: CircularProgressIndicator())
+            : Stack(
+                children: [
+                  GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 10.0,
                     ),
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    polylines: polylineSet,
+                    markers: markersSet,
+                    circles: circlesSet,
                   ),
-                ),
-                Positioned(
-                  top: 5.0,
-                  left: 5.0,
-                  child: GestureDetector(
-                    onTap: () {
-                      scaffoldKey.currentState!.openDrawer();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(22.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 6.0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: 0.0,
-                    child: (currentPageState == 2)
-                        ? requestRideDetails(
-                            loc1: Provider.of<AppData>(context, listen: false)
-                                .userPickUpLocation!
-                                .placeName,
-                            loc2: Provider.of<AppData>(context, listen: false)
-                                .dropOfflocation!
-                                .placeName,
-                            distanceText: details?.distanceText ?? 'Unknown',
-                            durationText: details?.durationText ?? 'Unknown',
-                          )
-                        : Container(
-                            height: 280.0,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 241, 228, 199),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15.0),
-                                topRight: Radius.circular(15.0),
+                  Positioned(
+                      left: 10.0,
+                      right: 10.0,
+                      bottom: 10.0,
+                      child: (currentPageState == 2)
+                          ? requestRideDetails(
+                              loc1: Provider.of<AppData>(context, listen: false)
+                                  .userPickUpLocation!
+                                  .placeName,
+                              loc2: Provider.of<AppData>(context, listen: false)
+                                  .dropOfflocation!
+                                  .placeName,
+                              distanceText: Details?.distanceText ?? 'Unknown',
+                              durationText: Details?.durationText ?? 'Unknown',
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 241, 228, 199),
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 16.0,
-                                  spreadRadius: 0.5,
-                                  offset: const Offset(0.7, 0.7),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 24.0, vertical: 18.0),
-                                child: SingleChildScrollView(
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0, vertical: 18.0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -337,18 +338,10 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black,
-                                                  blurRadius: 4.0,
-                                                  spreadRadius: 0.5,
-                                                  offset:
-                                                      const Offset(0.7, 0.7),
-                                                ),
-                                              ]),
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                          ),
                                           child: Padding(
                                             padding: EdgeInsets.all(12.0),
                                             child: Row(
@@ -384,22 +377,12 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  width: 265.0,
+                                                  width: 200,
                                                   child: Text(
-                                                    // Provider.of<AppData>(
-                                                    //                 context)
-                                                    //             .userPickUpLocation!=
-                                                    //         null
-                                                    //     ? Provider.of<AppData>(
-                                                    //             context)
-                                                    //         .userPickUpLocation!
-                                                    //         .placeName
-                                                    //     : "Pickup Location",
-                                                    "$_currentAddress",
-                                                    textAlign: TextAlign
-                                                        .left, // Set text alignment
+                                                    _currentAddress,
+                                                    textAlign: TextAlign.left,
                                                     softWrap: true,
-                                                    maxLines: 2,
+                                                    maxLines: 5,
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -417,11 +400,11 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                         ],
                                       ),
                                     ],
-                                  ),
-                                )),
-                          )),
-              ],
-            ),
+                                  )),
+                            )),
+                ],
+              ),
+      ),
     );
   }
 
@@ -434,13 +417,18 @@ class _requesterHomePageState extends State<requesterHomePage> {
     var dropOffLatLng = LatLng(finalPos!.latitude, finalPos.longitude);
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) => ProgressDialog(
-              message: "Please wait...",
-            ));
+      context: context,
+      builder: (BuildContext context) => ProgressDialog(
+        message: "Please wait...",
+      ),
+    );
 
     var details = await AssistantMethods.obtainPlaceDirectionDetails(
         pickUpLatLng, dropOffLatLng);
+
+    setState(() {
+      Details = details;
+    });
     print("Details: $details");
     if (details != null) {
       print("Distance: ${details.distanceText}");
@@ -474,7 +462,9 @@ class _requesterHomePageState extends State<requesterHomePage> {
       );
       polylineSet.add(polyline);
     });
+
     LatLngBounds latLngBounds;
+
     if (pickUpLatLng.latitude > dropOffLatLng.latitude &&
         pickUpLatLng.longitude > dropOffLatLng.longitude) {
       latLngBounds =
@@ -491,8 +481,12 @@ class _requesterHomePageState extends State<requesterHomePage> {
       latLngBounds =
           LatLngBounds(southwest: pickUpLatLng, northeast: dropOffLatLng);
     }
-    final GoogleMapController mapController = await _controller.future;
-    mapController.animateCamera(CameraUpdate.newLatLngBounds(latLngBounds, 30));
+
+    setState(() {
+      mapController
+          .animateCamera(CameraUpdate.newLatLngBounds(latLngBounds, 80));
+    });
+
     Marker pickUpMarker = Marker(
       markerId: MarkerId("pickUpId"),
       position: pickUpLatLng,
@@ -500,7 +494,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
       infoWindow:
           InfoWindow(title: initialPos.placeName, snippet: "My Location"),
     );
-
     Marker dropOffMarker = Marker(
       markerId: MarkerId("dropOffId"),
       position: dropOffLatLng,
@@ -508,10 +501,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
       infoWindow:
           InfoWindow(title: finalPos.placeName, snippet: "Drop Off Location"),
     );
-    setState(() {
-      markersSet.add(pickUpMarker);
-      markersSet.add(dropOffMarker);
-    });
     Circle pickUpCircle = Circle(
       fillColor: Colors.blueAccent,
       center: pickUpLatLng,
@@ -520,7 +509,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
       strokeColor: Colors.blueAccent,
       circleId: CircleId("pickUpId"),
     );
-
     Circle dropOffCircle = Circle(
       fillColor: Colors.deepPurple,
       center: dropOffLatLng,
@@ -531,6 +519,8 @@ class _requesterHomePageState extends State<requesterHomePage> {
     );
 
     setState(() {
+      markersSet.add(pickUpMarker);
+      markersSet.add(dropOffMarker);
       circlesSet.add(pickUpCircle);
       circlesSet.add(dropOffCircle);
     });
