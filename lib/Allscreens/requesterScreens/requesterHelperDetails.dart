@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, sort_child_properties_last
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,6 +20,9 @@ class requesterHelperDetails extends StatefulWidget {
 
 class _requesterHelperDetailsState extends State<requesterHelperDetails> {
   bool hasRiderMatched = false;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
   void initState() {
@@ -51,7 +55,6 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
     DataSnapshot snapshot = event.snapshot;
     if (snapshot.value != null) {
       Map<dynamic, dynamic> values = snapshot.value as Map<dynamic, dynamic>;
-
       // Iterate over all the paths and check if it contains the user's input locations
       for (var value in values.values) {
         Map<dynamic, dynamic> userData = value;
@@ -65,7 +68,16 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
           // Perform ray casting algorithm to check if the user's input locations are on the path
           if (crossProductAlgorithm(pathStartLatLng, pathDestinationLatLng,
               startLatLng, destinationLatLng)) {
-            // Get the user's name and phone number
+
+            var id = await getIdsByValue(values, value);
+            final User? user = _auth.currentUser;
+            print(id);
+            _database.child('users').child(user!.uid).child('ID').set({
+              'helperID': id,
+            });
+            _database.child('users').child(id).child('ID').set({
+              'requesterID': user.uid,
+            });
             String userName = userData['name'];
             String userPhoneNumber = userData['phone'];
             print('User name: $userName');
@@ -85,6 +97,38 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
 
     // Return null if no match was found
     return null;
+  }
+
+  Future<String> getIdsByValue(
+      Map<dynamic, dynamic> data, Map<dynamic, dynamic> value) async {
+    for (var entry in data.entries) {
+      dynamic id = entry.key;
+      Map<dynamic, dynamic> entryValue = entry.value;
+
+      if (entryValue.toString() == value.toString()) {
+        return id.toString();
+      }
+    }
+
+    return "";
+  }
+
+  Future<void> deleteID() async {
+    final User? user = _auth.currentUser;
+
+    dynamic helperID;
+    try {
+      var event =
+          await _database.child('users').child(user!.uid).child('ID').once();
+      if (event.snapshot.value != null) {
+        helperID = event.snapshot.value;
+      }
+    } catch (error) {
+      print('Error retrieving data: $error');
+    }
+
+    _database.child('users').child(user!.uid).child('ID').remove();
+    _database.child('users').child(helperID['helperID']).child('ID').remove();
   }
 
   // Cross product algorithm to check if the user's input locations are on the path
@@ -338,7 +382,8 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                                           Expanded(
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                // Add your action here
+                                                deleteID();
+                                                // Navigator.pop(context);
                                               },
                                               child: Text(
                                                 'Cancel',
