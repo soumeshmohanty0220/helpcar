@@ -383,7 +383,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                                             child: ElevatedButton(
                                               onPressed: () {
                                                 deleteID();
-                                                // Navigator.pop(context);
+                                                Navigator.pop(context);
                                               },
                                               child: Text(
                                                 'Cancel',
