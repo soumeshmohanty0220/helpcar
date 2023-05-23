@@ -124,24 +124,33 @@ class _requesterHomePageState extends State<requesterHomePage> {
                 height: 165.0,
                 child: DrawerHeader(
                   decoration: BoxDecoration(color: Colors.white),
-                  child: Row(children: [
-                    Image.asset("images/user_icon.png",
-                        height: 65.0, width: 65.0),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          //Name of the user fetched from firebase
-                          "Your Profile",
-                          style: TextStyle(
-                              fontSize: 16.0, fontFamily: "Brand Bold"),
-                        ),
-                      ],
-                    )
-                  ]),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "images/user_icon.png",
+                        height: 65.0,
+                        width: 65.0,
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            // Name of the user fetched from firebase
+                            "Your Profile",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Brand Bold",
+                            ),
+                          ),
+                          SizedBox(height: 5.0),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(),
@@ -151,6 +160,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   "Visit Profile",
                   style: TextStyle(fontSize: 15.0),
                 ),
+                onTap: () {},
               ),
               ListTile(
                 leading: Icon(Icons.history, color: Colors.blue),
@@ -158,13 +168,14 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   "History",
                   style: TextStyle(fontSize: 15.0),
                 ),
+                onTap: () {},
               ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HelperHomePage()));
+                    context,
+                    MaterialPageRoute(builder: (context) => HelperHomePage()),
+                  );
                 },
                 child: ListTile(
                   leading: Icon(Icons.car_rental, color: Colors.blue),
@@ -183,7 +194,8 @@ class _requesterHomePageState extends State<requesterHomePage> {
                 onTap: () async {
                   try {
                     await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacementNamed(context, LoginScreen.idScreen);
+                    Navigator.pushReplacementNamed(
+                        context, LoginScreen.idScreen);
                   } catch (e) {
                     print("Error logging out: $e");
                   }
@@ -193,6 +205,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
           ),
         ),
       ),
+
       // ignore: unnecessary_null_comparison
       body: _center == LatLng(0, 0)
           ? Center(child: CircularProgressIndicator())

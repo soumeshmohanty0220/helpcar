@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, deprecated_member_use, depend_on_referenced_packages, library_private_types_in_public_api, prefer_const_constructors, unnecessary_string_interpolations, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -43,9 +43,9 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
           });
         } else {
           setState(() {
-            _currentLocation = 'N/A';
-            _destination = 'N/A';
-            _time = 'N/A';
+            _currentLocation = 'No Data';
+            _destination = 'No Data';
+            _time = 'No Time Set';
           });
         }
       });
@@ -69,123 +69,199 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
 
   @override
   Widget build(BuildContext context) {
-  return Container(
-    width: 350,
-    padding: EdgeInsets.all(16.0),
-    decoration: BoxDecoration(
-      color: Color.fromARGB(255, 226, 223, 223),
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications,
-                color: Colors.deepOrange,
-              ),
-            ),
-            Text(
-              "CURRENT PATH",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Text(
-                '${_currentLocation ?? "N/A"}',
-                maxLines: 2,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.arrow_right_alt,
-              size: 50,
-              color: Colors.black,
-            ),
-            Expanded(
-              child: Text(
-                '${_destination ?? "N/A"}',
-                maxLines: 2,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          "OUT TIME",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.blue,
+    return Container(
+      width: 400,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 255, 253, 253),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 50,
+            offset: Offset(0, 5),
           ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(
-          '${_time ?? "No time set"}',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-            fontSize: 18,
-          ),
-        ),
-        SizedBox(
-          height: 24,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () {
-                _removePath();
-              },
-              icon: Icon(Icons.delete),
-              label: Text('Remove'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.notifications,
+                  color: Colors.deepOrange,
+                  size: 30,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-              ),
+                Text(
+                  "CURRENT PATH",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+                Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ],
             ),
-            SizedBox(width: 16.0),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
+          ),
+          Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: Colors.red,
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  "Current Location",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    _currentLocation ?? "No Data",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: Colors.red,
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  "Destination",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    _destination ?? "No Data",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(
+                Icons.access_time,
+                color: Colors.red,
+                size: 20,
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  "Out Time",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 8),
+                Text(
+                  _time ?? "No Time Set",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: _removePath,
+                icon: Icon(Icons.delete),
+                label: Text('Remove'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
