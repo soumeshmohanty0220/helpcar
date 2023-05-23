@@ -1,9 +1,7 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:helpcar/Allscreens/HelperScreens/helperCurrentPath.dart';
 import 'package:helpcar/Allscreens/HelperScreens/helpersearchscreen.dart';
-import 'helperPreviousPath.dart';
 
 class HelperHomePage extends StatefulWidget {
   const HelperHomePage({Key? key}) : super(key: key);
@@ -42,7 +40,6 @@ class _HelperHomePageState extends State<HelperHomePage>
     super.dispose();
   }
 
-  final int _selectedButtonIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +47,7 @@ class _HelperHomePageState extends State<HelperHomePage>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        shadowColor: Colors.greenAccent,
+        shadowColor: const Color.fromARGB(255, 0, 0, 0),
         backgroundColor: Color.fromARGB(255, 255, 127, 67),
         toolbarHeight: 250,
         title: Stack(
