@@ -361,8 +361,7 @@ class _requesterHelperDetailsState extends State<requesterHelperDetails> {
                                 padding: EdgeInsets.all(20.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.0),
-                                  color:
-                                      const Color.fromARGB(255, 126, 126, 126),
+                                  color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.3),

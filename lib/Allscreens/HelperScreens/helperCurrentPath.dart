@@ -26,7 +26,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
   }
 
   Future<void> _fetchPath() async {
-    final DatabaseReference database = FirebaseDatabase.instance.reference();
+    final DatabaseReference database = FirebaseDatabase.instance.ref();
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -37,6 +37,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
         final Map<dynamic, dynamic>? data =
             event.snapshot.value as Map<dynamic, dynamic>?;
         if (data != null) {
+          // print("this data ${data}");
           setState(() {
             _currentLocation = data['currentLocation'];
             _destination = data['destination'];
@@ -129,7 +130,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 child: Text(
                   "Current Location",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[700],
                   ),
@@ -137,7 +138,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           TextField(
             controller:
                 TextEditingController(text: _currentLocation ?? "No Data"),
@@ -160,7 +161,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 10),
           Row(
             children: [
               Icon(
@@ -173,7 +174,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 child: Text(
                   "Destination",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[700],
                   ),
@@ -181,10 +182,10 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           TextField(
             controller:
-                TextEditingController(text: _currentLocation ?? "No Data"),
+                TextEditingController(text: _destination ?? "No Data"),
             readOnly: true,
             style: TextStyle(
               fontSize: 15,
@@ -204,7 +205,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 10),
           Row(
             children: [
               Icon(
@@ -217,7 +218,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 child: Text(
                   "Out Time",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[700],
                   ),
@@ -225,10 +226,10 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
           TextField(
             controller:
-                TextEditingController(text: _currentLocation ?? "No Data"),
+                TextEditingController(text: _time ?? "No Data"),
             readOnly: true,
             style: TextStyle(
               fontSize: 15,
@@ -248,7 +249,7 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
               ),
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

@@ -14,14 +14,14 @@ import '../../Models/address.dart';
 import '../../Models/placepredictions.dart';
 import '../../configmaps.dart';
 
-class CurrentPathPage extends StatefulWidget {
-  const CurrentPathPage({Key? key}) : super(key: key);
+class helperAddPath extends StatefulWidget {
+  const helperAddPath({Key? key}) : super(key: key);
 
   @override
-  _CurrentPathPageState createState() => _CurrentPathPageState();
+  _helperAddPathState createState() => _helperAddPathState();
 }
 
-class _CurrentPathPageState extends State<CurrentPathPage> {
+class _helperAddPathState extends State<helperAddPath> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
 

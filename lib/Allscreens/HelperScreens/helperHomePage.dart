@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:helpcar/Allscreens/HelperScreens/helperCurrentPath.dart';
-import 'package:helpcar/Allscreens/HelperScreens/helpersearchscreen.dart';
+
+import 'helperAddPath.dart';
 
 class HelperHomePage extends StatefulWidget {
   const HelperHomePage({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _HelperHomePageState extends State<HelperHomePage>
                       "Hey Helper !",
                       style: TextStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w900,
                         fontSize: 40.0,
                       ),
                     ),
@@ -89,7 +90,7 @@ class _HelperHomePageState extends State<HelperHomePage>
                       "Add your way",
                       style: TextStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         fontSize: 25.0,
                       ),
                     ),
@@ -118,7 +119,7 @@ class _HelperHomePageState extends State<HelperHomePage>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CurrentPathPage(),
+                        builder: (context) => const helperAddPath(),
                       ),
                     );
                   },
