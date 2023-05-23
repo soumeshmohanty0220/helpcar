@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -38,13 +39,12 @@ class _requesterHomePageState extends State<requesterHomePage> {
 
   Set<Marker> markersSet = {};
 
-  // ignore: prefer_final_fields, unused_field
-  Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController mapController;
   late LatLng _center = LatLng(0, 0);
   String _currentAddress = "";
 
-  // ignore: prefer_final_fields
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   @override
   void initState() {
@@ -55,13 +55,8 @@ class _requesterHomePageState extends State<requesterHomePage> {
   void requestPermission() async {
     LocationPermission permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-// ignore: todo
-// TODO: Handle denied permission
     } else if (permission == LocationPermission.deniedForever) {
-// ignore: todo
-// TODO: Handle denied permission forever
     } else {
-// Permission granted
       getCurrentLocation();
     }
   }
@@ -69,6 +64,18 @@ class _requesterHomePageState extends State<requesterHomePage> {
   void getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+        
+      final User? user = _auth.currentUser;
+      if (user == null) {
+        Navigator.pop(context);
+        return;
+      }
+
+    _database.child('users').child(user.uid).child("current loc").set({
+      'currentLat': position.latitude,
+      'currentLon': position.longitude,
+    });
+
     setState(() {
       _center = LatLng(position.latitude, position.longitude);
     });
@@ -503,4 +510,5 @@ class _requesterHomePageState extends State<requesterHomePage> {
       markersSet.add(dropOffMarker);
     });
   }
+
 }
