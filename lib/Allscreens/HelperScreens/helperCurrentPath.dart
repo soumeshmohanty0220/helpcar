@@ -251,7 +251,8 @@ class _HelperCurrentPathState extends State<HelperCurrentPath> {
                 icon: Icon(Icons.delete),
                 label: Text('Remove Path'),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: Colors.red,
+                  primary: Colors.red,
+                  onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
