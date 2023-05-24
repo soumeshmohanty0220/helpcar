@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,9 @@ class RequesterDetailsPage extends StatefulWidget {
 }
 
 class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
+  var nameController = TextEditingController();
+  var contactController = TextEditingController();
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
@@ -18,12 +23,12 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
   Future<void> deleteID() async {
     final User? user = _auth.currentUser;
 
-    dynamic helperID;
+    dynamic requesterID;
     try {
       var event =
           await _database.child('users').child(user!.uid).child('ID').once();
       if (event.snapshot.value != null) {
-        helperID = event.snapshot.value;
+        requesterID = event.snapshot.value;
       }
     } catch (error) {
       print('Error retrieving data: $error');
@@ -34,10 +39,48 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
 
     _database
         .child('users')
-        .child(helperID['requesterID'])
+        .child(requesterID['requesterID'])
         .child('ID')
         .remove();
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // provideDetails();
+    super.initState();
+  }
+
+  // Future<void> provideDetails() async {
+  //   final User? user = _auth.currentUser;
+  //   dynamic requesterID;
+  //   try {
+  //     var event =
+  //         await _database.child('users').child(user!.uid).child('ID').once();
+  //     if (event.snapshot.value != null) {
+  //       requesterID = event.snapshot.value;
+  //     }
+  //   } catch (error) {
+  //     print('Error retrieving data: $error');
+  //   }
+
+  //   DatabaseReference userRef = _database.child('users').child(requesterID);
+
+  //   // Update data in realtime
+  //   userRef.child('paths').onValue.listen((event) {
+  //     final Map<dynamic, dynamic>? data =
+  //         event.snapshot.value as Map<dynamic, dynamic>?;
+  //     if (data != null) {
+  //       // print("this data ${data}");
+  //       setState(() {
+  //         nameController = data['name'];
+  //         contactController = data['phone'];
+  //       });
+  //     } else {
+  //       print("data is null");
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +120,14 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
                   ),
                   SizedBox(height: 8),
                   TextField(
+                    controller: nameController,
+                    readOnly: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter name',
+                      hintText: 'Helper 3',
                     ),
                   ),
+                  // Text("Suman Sahoo"),
                   SizedBox(height: 16),
                   Text(
                     'Contact',
@@ -93,9 +139,11 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
                   ),
                   SizedBox(height: 8),
                   TextField(
+                    controller: contactController,
+                    readOnly: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter contact',
+                      hintText: '8658820377',
                     ),
                   ),
                 ],
