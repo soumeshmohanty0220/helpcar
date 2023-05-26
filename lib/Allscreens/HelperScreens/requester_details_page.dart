@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RequesterDetailsPage extends StatefulWidget {
@@ -33,6 +34,17 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
     } catch (error) {
       print('Error retrieving data: $error');
     }
+
+
+
+
+    //user.uid is helper id and requesterID is requester id 
+    //what I have to check here is if the user.id current location is equal to a field "destination" in requesterID
+    // Position position = await Geolocator.getCurrentPosition(
+    //     desiredAccuracy: LocationAccuracy.high);
+    // if ( position.latitude == 50 && position.longitude == 50 ){
+
+    // }
 
     _database.child('users').child(user!.uid).child('ID').remove();
     _database.child('users').child(user!.uid).child('paths').remove();
@@ -176,6 +188,9 @@ class _RequesterDetailsPageState extends State<RequesterDetailsPage> {
                         ),
                         TextButton(
                           onPressed: () => {
+
+                            //check if the curr location of helper equal to destination location of requester
+
                             deleteID(),
                             Navigator.pop(context),
                             Navigator.pop(context),

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print, prefer_const_constructors_in_immutables, avoid_unnecessary_containers, prefer_is_empty, file_names, unused_local_variable, duplicate_ignore
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:helpcar/AllWidgets/divider.dart';
 import 'package:helpcar/AllWidgets/progressdialog.dart';
 import 'package:helpcar/DataHandler/appData.dart';
@@ -169,8 +170,13 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void findPlace(String placeName) async {
     if (placeName.length > 1) {
+
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    // if ( position.latitude == 50 && position.longitude == 50 ){
+
       String autoCompleteUrl =
-          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=1234567890&components=country:in";
+          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=1234567890&location=${position.latitude}%2C${position.longitude}&radius=500&components=country:in";
 
       var res = await RequestAssistant.getRequest(autoCompleteUrl);
 

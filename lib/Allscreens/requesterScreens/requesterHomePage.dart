@@ -181,7 +181,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                         children: [
                           Text(
                             // Name of the user fetched from firebase
-                            "Your Profile",
+                            "GFG",
                             style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Brand Bold",
@@ -203,14 +203,14 @@ class _requesterHomePageState extends State<requesterHomePage> {
                 ),
                 onTap: () {},
               ),
-              ListTile(
-                leading: Icon(Icons.history, color: Colors.blue),
-                title: Text(
-                  "History",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-                onTap: () {},
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.history, color: Colors.blue),
+              //   title: Text(
+              //     "History",
+              //     style: TextStyle(fontSize: 15.0),
+              //   ),
+              //   onTap: () {},
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
