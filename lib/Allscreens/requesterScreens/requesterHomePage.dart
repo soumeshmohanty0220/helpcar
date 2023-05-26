@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:helpcar/Allscreens/profile.dart';
 import 'package:helpcar/Models/directiondetails.dart';
 import 'package:provider/provider.dart';
 
@@ -46,10 +47,13 @@ class _requesterHomePageState extends State<requesterHomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
+  String username = "";
+
   @override
   void initState() {
     super.initState();
     requestPermission();
+    userName();
   }
 
   void requestPermission() async {
@@ -64,12 +68,12 @@ class _requesterHomePageState extends State<requesterHomePage> {
   void getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-        
-      final User? user = _auth.currentUser;
-      if (user == null) {
-        Navigator.pop(context);
-        return;
-      }
+
+    final User? user = _auth.currentUser;
+    if (user == null) {
+      Navigator.pop(context);
+      return;
+    }
 
     _database.child('users').child(user.uid).child("current loc").set({
       'currentLat': position.latitude,
@@ -109,6 +113,18 @@ class _requesterHomePageState extends State<requesterHomePage> {
     mapController.animateCamera(CameraUpdate.newLatLngZoom(_center, 15));
 
     print("This is your address :: $address");
+  }
+
+  Future<void> userName() async {
+    final User? user = _auth.currentUser;
+    var event =
+        await _database.child('users').child(user!.uid).child('name').once();
+    if (event.snapshot.value != null) {
+      // return event.snapshot.value as String;
+      setState(() {
+        username = event.snapshot.value as String;
+      });
+    }
   }
 
   @override
@@ -180,8 +196,7 @@ class _requesterHomePageState extends State<requesterHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            // Name of the user fetched from firebase
-                            "GFG",
+                            username,
                             style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Brand Bold",
@@ -201,16 +216,13 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   "Visit Profile",
                   style: TextStyle(fontSize: 15.0),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.history, color: Colors.blue),
-              //   title: Text(
-              //     "History",
-              //     style: TextStyle(fontSize: 15.0),
-              //   ),
-              //   onTap: () {},
-              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -233,13 +245,29 @@ class _requesterHomePageState extends State<requesterHomePage> {
                   style: TextStyle(fontSize: 15.0),
                 ),
                 onTap: () async {
-                  try {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacementNamed(
-                        context, LoginScreen.idScreen);
-                  } catch (e) {
-                    print("Error logging out: $e");
-                  }
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Logout'),
+                      content: const Text('Are you sure to log out ?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => {
+                            Navigator.pop(context),
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () async => {
+                            await FirebaseAuth.instance.signOut(),
+                            Navigator.pushReplacementNamed(
+                                context, LoginScreen.idScreen),
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
             ],
@@ -405,7 +433,6 @@ class _requesterHomePageState extends State<requesterHomePage> {
                                     ],
                                   )),
                             )),
-                
                 ],
               ),
       ),
@@ -511,5 +538,4 @@ class _requesterHomePageState extends State<requesterHomePage> {
       markersSet.add(dropOffMarker);
     });
   }
-
 }
